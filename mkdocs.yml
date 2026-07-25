@@ -1,0 +1,92 @@
+site_name: Control of Self-Driving Vehicles
+site_description: Hands-on control engineering course for the Smart Vehicles Summer School 2026
+site_author: Rudolf Krecht
+site_url: https://rudolfkrecht.github.io/smart_vehicles_control/
+repo_url: https://github.com/rudolfkrecht/smart_vehicles_control
+repo_name: rudolfkrecht/smart_vehicles_control
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+nav:
+  - Home:
+      - Course overview: index.md
+      - Four-day schedule: schedule.md
+      - Software setup: setup.md
+  - Day 1 — Longitudinal Control:
+      - Day overview: day1/index.md
+      - 1. Control in autonomous vehicles: day1/lesson1.md
+      - 2. Requirements and performance: day1/lesson2.md
+      - 3. Vehicle simulation: day1/lesson3.md
+      - 4. Proportional control: day1/lesson4.md
+      - 5. Cruise-control workshop: day1/lesson5.md
+      - 6. PI control challenge: day1/lesson6.md
+  - Day 2 — Path Following:
+      - Day overview: day2/index.md
+      - 1. Bicycle model: day2/lesson1.md
+      - 2. Steering behaviour: day2/lesson2.md
+      - 3. Paths and tracking errors: day2/lesson3.md
+      - 4. Pure Pursuit: day2/lesson4.md
+      - 5. Path-following workshop: day2/lesson5.md
+      - 6. Speed-dependent tracking: day2/lesson6.md
+  - Day 3 — Integrated ADAS:
+      - Day overview: day3/index.md
+      - 1. Integrated control: day3/lesson1.md
+      - 2. Curvature and safe speed: day3/lesson2.md
+      - 3. Curve-aware speed control: day3/lesson3.md
+      - 4. Adaptive Cruise Control: day3/lesson4.md
+      - 5. Behaviour states: day3/lesson5.md
+      - 6. Traffic-scenario workshop: day3/lesson6.md
+  - Day 4 — Testing and Robustness:
+      - Day overview: day4/index.md
+      - 1. Disturbances and failures: day4/lesson1.md
+      - 2. Performance metrics: day4/lesson2.md
+      - 3. Automated testing: day4/lesson3.md
+      - 4. Challenge preparation: day4/lesson4.md
+      - 5. Final challenge: day4/lesson5.md
+      - 6. Results and discussion: day4/lesson6.md
+  - Resources:
+      - Python reference: resources/python-reference.md
+      - Formula sheet: resources/formula-sheet.md
+      - Troubleshooting: resources/troubleshooting.md
+
