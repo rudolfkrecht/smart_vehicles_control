@@ -1,7 +1,7 @@
 <div class="hero">
   <h1>Control of Self-Driving Vehicles</h1>
   <p>From feedback control to an integrated autonomous-driving challenge</p>
-  <p><strong>Smart Vehicles Summer School 2026 · 4 days · 24 practical lessons</strong></p>
+  <p><strong>Smart Vehicles Summer School 2026</strong></p>
 </div>
 
 ## What will we build?
@@ -25,7 +25,7 @@ By the final lesson, the vehicle will:
 - operate with realistic actuator limits;
 - complete an unfamiliar test track under disturbances.
 
-## Four-day journey
+## Four days
 
 <div class="grid cards" markdown>
 
@@ -35,7 +35,7 @@ By the final lesson, the vehicle will:
 
     Build and tune proportional and PI cruise controllers.
 
-    [:octicons-arrow-right-24: Start Day 1](day1/index.md)
+    [Start Day 1](day1/index.md)
 
 -   **Day 2 — Control direction**
 
@@ -43,7 +43,7 @@ By the final lesson, the vehicle will:
 
     Simulate steering and implement Pure Pursuit path following.
 
-    [:octicons-arrow-right-24: Start Day 2](day2/index.md)
+    [Start Day 2](day2/index.md)
 
 -   **Day 3 — Control behaviour**
 
@@ -51,7 +51,7 @@ By the final lesson, the vehicle will:
 
     Combine lateral control, curve-aware speed and adaptive cruise control.
 
-    [:octicons-arrow-right-24: Start Day 3](day3/index.md)
+    [Start Day 3](day3/index.md)
 
 -   **Day 4 — Test robustness**
 
@@ -59,7 +59,7 @@ By the final lesson, the vehicle will:
 
     Measure performance and complete the final autonomous-driving challenge.
 
-    [:octicons-arrow-right-24: Start Day 4](day4/index.md)
+    [Start Day 4](day4/index.md)
 
 </div>
 
