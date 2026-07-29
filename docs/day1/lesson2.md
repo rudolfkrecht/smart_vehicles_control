@@ -13,7 +13,7 @@ python day_1_longitudinal/demos/lesson2_response_metrics.py
 The demonstration compares a slow P controller, a tuned P controller and a PI
 controller.
 
-![Response metrics comparison](../assets/images/day1/lesson2_response_metrics.png)
+![Response metrics comparison](images/lesson2_response_metrics.png)
 
 Read the graph and printed table using these requirements:
 

@@ -26,7 +26,7 @@ simulation runs. Reset before each formal comparison.
 python day_1_longitudinal/demos/lesson4_p_control.py
 ```
 
-![Effect of proportional gain](../assets/images/day1/lesson4_p_control.png)
+![Effect of proportional gain](images/lesson4_p_control.png)
 
 The only live edit is:
 

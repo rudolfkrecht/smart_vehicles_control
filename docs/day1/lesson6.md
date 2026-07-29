@@ -26,7 +26,7 @@ small positive values and meet both criteria:
 
 The expected behaviour of a balanced solution is:
 
-![P and PI hill response](../assets/images/day1/lesson6_pi_solution.png)
+![P and PI hill response](images/lesson6_pi_solution.png)
 
 ## Windup demonstration
 
@@ -37,7 +37,7 @@ In the graphical simulator, select **Windup case** and run once with
 python day_1_longitudinal/demos/lesson6_windup.py
 ```
 
-![Integral windup comparison](../assets/images/day1/lesson6_windup.png)
+![Integral windup comparison](images/lesson6_windup.png)
 
 The steep hill makes the target temporarily unreachable. Without anti-windup,
 the integral term continues growing while the actuator is saturated, causing a

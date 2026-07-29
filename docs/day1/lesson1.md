@@ -15,7 +15,7 @@ python day_1_longitudinal/gui/day1_vehicle_simulator.py
 Select **P + hill** or **PI + hill**, then press **Start**. The feedback strip
 shows how measured speed returns from the vehicle to the error calculation.
 
-![Interactive feedback simulation](../assets/images/day1/day1_vehicle_simulator.png)
+![Interactive feedback simulation](images/day1_vehicle_simulator.png)
 
 For a static comparison plot, run:
 
@@ -28,7 +28,7 @@ Predict before running:
 > Both vehicles receive an actuator command. Which one can maintain the target
 > speed when the hill begins at 15 seconds?
 
-![Open-loop and feedback comparison](../assets/images/day1/lesson1_feedback_preview.png)
+![Open-loop and feedback comparison](images/lesson1_feedback_preview.png)
 
 The open-loop vehicle uses a fixed command. The PI-controlled vehicle measures
 speed, calculates error and changes its command to reject the disturbance.
