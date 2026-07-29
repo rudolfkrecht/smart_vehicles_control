@@ -1,171 +1,321 @@
-# Lesson 6 — Workshop: integrated traffic scenario
+# Lesson 6 — Individual project: stop-and-go traffic
 
-## Learning objective
+- **Format:** Group controller-development task
+- **Editable file:** `python_3d_adas_day3\student_controller.py`
+- **Main outcome:** A validated cumulative controller that follows the road and
+  lead vehicle for more than one lap
 
-Tune one configuration that follows the road, respects curve demand, follows
-and stops behind a lead vehicle, resumes safely and satisfies quantitative
-criteria.
+## Project brief
 
-## Scenario
+Continue from the working ACC implementation created in Lesson 5. Tune the
+traffic-spacing parameters so the blue ego car:
 
-The ego vehicle must:
+- follows the target lane;
+- respects the 14 m/s cruise setting when traffic permits;
+- responds to the red lead vehicle;
+- stops without collision;
+- restarts smoothly;
+- completes at least one lap.
 
-1. accelerate along the reference road;
-2. slow before curved sections;
-3. approach a slower lead vehicle;
-4. maintain a speed-dependent gap;
-5. stop when the lead vehicle stops;
-6. resume when it moves;
-7. remain within road boundaries throughout.
+The lead-vehicle schedule is fixed and repeatable:
 
-## Intentionally aggressive starter
+1. 10.5 m/s cruise;
+2. gradual slowing to 6 m/s;
+3. 6 m/s travel;
+4. braking to a complete stop;
+5. an 8-second stop;
+6. acceleration to 11 m/s;
+7. a later second slowdown.
 
-Run:
+Do not change the Day 1 PI or Day 2 Pure Pursuit parameters.
+
+## Acceptance criteria
+
+Use a 105-second headless run:
 
 ```bat
-python day_3\student\workshop_integrated_traffic.py
+py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14
 ```
 
-The starter uses:
+| Requirement | Pass condition |
+|---|---:|
+| Collision samples | 0 |
+| Minimum bumper gap | at least 6 m |
+| Minimum finite TTC | at least 4 s |
+| Emergency samples | 0 |
+| Mean absolute gap error | below 9.5 m |
+| Selected-target speed RMSE | below 2.2 m/s |
+| Peak deceleration | below 2.5 m/s² |
+| Lap progress | at least 100% |
+| Maximum lane error | below 0.75 m |
+| Outside-road samples | 0% |
+| Commands | throttle and brake never positive together |
+
+These are course acceptance criteria for one deterministic model. They are not
+real-vehicle safety requirements.
+
+## Prepare the experiment
+
+From the package root:
+
+```bat
+cd python_3d_adas_day3
+mkdir results
+```
+
+Confirm that your Lesson 5 implementation is present in:
+
+```text
+student_controller.py
+```
+
+Keep:
 
 ```python
-GLOBAL_SPEED_LIMIT_MPS = 18.0
-MAX_LATERAL_ACCELERATION_MPS2 = 4.5
-CURVE_PREVIEW_DISTANCE_M = 3.0
-TIME_HEADWAY_S = 0.65
-EMERGENCY_TTC_S = 0.70
-EMERGENCY_GAP_M = 1.2
+self.KP = 0.15
+self.KI = 0.005
+self.BASE_LOOKAHEAD_M = 4.0
+self.SPEED_GAIN_S = 0.35
 ```
 
-It is expected to fail. The first run is diagnostic evidence, not an answer.
+You may tune only:
 
-## Mandatory success criteria
-
-| Criterion | Requirement |
-|---|---:|
-| Collision | none |
-| Road departure | 0% |
-| Minimum gap | at least 3 m |
-| Peak lateral acceleration | at most 3.5 m/s² |
-| Route completion | at least 95% |
-
-Safety constraints are checked before the weighted score. An unsafe vehicle is
-disqualified even if it finishes quickly.
-
-## Tuning sequence
-
-Use this order:
-
-1. **Remove collision risk.** Increase time headway and restore earlier
-   emergency thresholds.
-2. **Reduce cornering demand.** Lower maximum lateral acceleration and add
-   preview.
-3. **Check road tracking.** Keep the Day 2 look-ahead values unless evidence
-   shows a lateral failure.
-4. **Recover completion.** Raise the global limit only if every safety
-   requirement remains satisfied.
-5. **Check comfort.** Inspect acceleration and jerk after safety passes.
-
-Changing every parameter simultaneously makes cause and effect impossible to
-explain.
-
-## Prepared comparison
-
-```bat
-python day_3\demos\lesson6_workshop_preview.py
+```python
+self.STANDSTILL_GAP_M
+self.TIME_HEADWAY_S
+self.GAP_GAIN_PER_S
+self.CLOSING_GAIN
 ```
 
-![Aggressive and balanced integrated configurations](images/lesson6_workshop_preview.png)
+## Establish the Lesson 5 baseline
 
-The balanced reference is not a universal optimum. It demonstrates one
-configuration that passes on this road and traffic schedule.
+Use:
 
-## Weighted score
-
-Safe candidates receive a small ranking score based on:
-
-- mean path error;
-- speed RMSE;
-- peak jerk;
-- penalty for low minimum gap;
-- incomplete route penalty.
-
-Lower is better. The weights express teaching priorities rather than an
-automotive standard.
-
-## PyQt workshop
-
-Use the two presets:
-
-- **Lesson 6 — aggressive workshop**;
-- **Lesson 6 — balanced reference**.
-
-Then create your own configuration:
-
-1. pause;
-2. change one parameter;
-3. state a prediction;
-4. select **Apply and reset scenario**;
-5. run;
-6. inspect all four metric cards and plots;
-7. record the result.
-
-## Advanced parameter sweep
+```python
+self.STANDSTILL_GAP_M = 6.0
+self.TIME_HEADWAY_S = 1.5
+self.GAP_GAIN_PER_S = 0.20
+self.CLOSING_GAIN = 0.50
+```
 
 Run:
 
 ```bat
-python day_3\student\advanced_parameter_sweep.py
+py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\baseline_acc.csv
 ```
 
-The sweep explores combinations of:
+Copy the printed values:
 
-- global speed limit;
-- lateral acceleration limit;
-- preview distance;
-- ACC time headway.
+| Metric | Baseline |
+|---|---:|
+| Minimum gap | |
+| Minimum finite TTC | |
+| Collision samples | |
+| Mean absolute gap error | |
+| Speed-target RMSE | |
+| Peak deceleration | |
+| Lap progress | |
+| Maximum lane error | |
 
-It prints the ten best safe configurations. Explain:
+Mark each acceptance criterion pass or fail before tuning.
 
-1. Why can two configurations have similar scores for different reasons?
-2. Why does ranking on the training scenario risk overfitting?
-3. Which unseen scenario should be tested next?
+## Tune spacing policy
 
-Day 4 answers these questions with disturbances, repeatable tests and an
-unseen final challenge.
+Choose at least two new spacing candidates:
 
-## Required team conclusion
+| Parameter | Suggested range |
+|---|---:|
+| Standstill gap $d_0$ | 4–8 m |
+| Time headway $T_h$ | 1.0–2.2 s |
 
-Report:
+Calculate the desired gap at 6 and 14 m/s before running:
 
-- final parameter values;
-- minimum gap;
-- maximum path error;
-- peak lateral acceleration;
-- completion percentage;
-- one failure observed;
-- one proposed real-vehicle improvement.
+| Candidate | $d_0$ | $T_h$ | $d_{\mathrm{des}}$ at 6 m/s | $d_{\mathrm{des}}$ at 14 m/s |
+|---|---:|---:|---:|---:|
+| 1 | | | | |
+| 2 | | | | |
 
-## Simulation-to-real boundary
+Change only $d_0$ and $T_h$. Keep the two feedback gains at their baseline
+values.
 
-The result supports:
+Run each candidate with a unique filename:
 
-- understanding control architecture;
-- comparing parameter effects;
-- testing logical consistency;
-- practising metric-based engineering.
+```bat
+py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\spacing_1.csv
+```
 
-It does not certify:
+| $d_0$ | $T_h$ | Min gap | Min TTC | Gap error | Completion | Decision |
+|---:|---:|---:|---:|---:|---:|---|
+| | | | | | | |
+| | | | | | | |
 
-- tire-force feasibility;
-- collision avoidance;
-- functional safety;
-- perception reliability;
-- real-time implementation;
-- legal roadworthiness.
+## Tune response gains
 
-## Summary
+Keep your selected spacing policy. Compare at least three gain pairs:
 
-Day 3 ends with a controller that combines path tracking, road-speed planning,
-ACC and behaviour supervision. Day 4 will test whether that success survives
-noise, mismatch, braking degradation and unseen scenarios.
+| Parameter | Suggested range | Effect |
+|---|---:|---|
+| $K_d$ | 0.12–0.30 s⁻¹ | response to gap error |
+| $K_{\Delta v}$ | 0.30–0.80 | response to positive closing speed |
+
+Use:
+
+```bat
+py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\gain_1.csv
+```
+
+| $K_d$ | $K_{\Delta v}$ | Min gap | Speed RMSE | Peak decel. | Gap error | Emergency | Decision |
+|---:|---:|---:|---:|---:|---:|---:|---|
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+
+Change one gain at a time whenever possible.
+
+Interpretation:
+
+- larger $K_d$ corrects spacing error more strongly but can produce a more
+  active target;
+- larger $K_{\Delta v}$ responds earlier to closing but may reduce speed more
+  than necessary;
+- small gains may appear smooth while allowing an unsafe gap to develop.
+
+## Select using a hierarchy
+
+Reject candidates in this order:
+
+1. any collision;
+2. minimum gap below 6 m;
+3. minimum TTC below 4 s;
+4. Emergency activation in the reference scenario;
+5. road departure or incomplete lap;
+6. excessive deceleration;
+7. excessive gap or speed-target error.
+
+Among the remaining candidates, select one balanced configuration.
+
+Do not tune only for:
+
+- maximum progress;
+- smallest gap error;
+- largest minimum gap;
+- lowest deceleration.
+
+Each single objective can produce a poor result elsewhere.
+
+## Final graphical test
+
+Run:
+
+```bat
+py -3.12 run_simulator.py
+```
+
+Select **Student**, set 14 m/s and press **Reset**.
+
+Watch the complete stop-and-go event. Check:
+
+- Cruise changes to Follow when the lead enters sensor range;
+- the selected target falls before the gap becomes critical;
+- Brake does not chatter rapidly;
+- Emergency does not activate in the final solution;
+- the ego car stops with visible clearance;
+- it restarts after the lead vehicle;
+- Pure Pursuit still follows both bends;
+- the car remains stable on the inclines.
+
+If graphical behaviour disagrees with the headless result, verify that you
+pressed **Reset** after saving `student_controller.py`.
+
+## Produce the final evidence
+
+Repeat the exact final headless run:
+
+```bat
+py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\final_acc_run.csv
+```
+
+Complete:
+
+| Requirement | Result | Pass/fail |
+|---|---:|---|
+| Collision samples $=0$ | | |
+| Minimum gap $\geq6$ m | | |
+| Minimum TTC $\geq4$ s | | |
+| Emergency samples $=0$ | | |
+| Mean gap error $<9.5$ m | | |
+| Speed RMSE $<2.2$ m/s | | |
+| Peak deceleration $<2.5$ m/s² | | |
+| Lap progress $\geq100\%$ | | |
+| Max lane error $<0.75$ m | | |
+| Outside road $=0\%$ | | |
+
+## Submit the checkpoint
+
+Submit:
+
+1. `student_controller.py`;
+2. `baseline_acc.csv`;
+3. at least three candidate CSV files;
+4. `final_acc_run.csv`;
+5. completed parameter table;
+6. completed scorecard;
+7. the following conclusion:
+
+```text
+I selected d0 = ___ m and Th = ___ s.
+I selected Kd = ___ 1/s and Kclosing = ___.
+Compared with the baseline, minimum gap changed from ___ to ___.
+The most important supporting metrics were ___ and ___.
+The main safety–efficiency trade-off was ___.
+The simulator omits ___, so I cannot conclude ___ about a real vehicle.
+```
+
+??? success "Reference solution and expected benchmark"
+    A valid reference configuration is:
+
+    ```python
+    self.STANDSTILL_GAP_M = 6.0
+    self.TIME_HEADWAY_S = 1.7
+    self.GAP_GAIN_PER_S = 0.22
+    self.CLOSING_GAIN = 0.65
+    ```
+
+    The packaged 105-second reference run produces approximately:
+
+    | Metric | Reference |
+    |---|---:|
+    | Minimum gap | 7.52 m |
+    | Minimum finite TTC | 9.16 s |
+    | Collision samples | 0 |
+    | Mean absolute gap error | 8.33 m |
+    | Speed-target RMSE | 2.02 m/s |
+    | Peak deceleration | 1.37 m/s² |
+    | Lap progress | 108.5% |
+    | Maximum lane error | 0.092 m |
+    | Outside road | 0% |
+    | Emergency samples | 0 |
+
+    The complete worked controller is:
+
+    ```text
+    student_controller_solution.py
+    ```
+
+    Small numerical differences are acceptable. Reproducible evidence and a
+    sound explanation matter more than copying every reference digit.
+
+## Fast-finisher robustness test
+
+Keep the final controller and compare:
+
+```bat
+py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\robustness_12mps.csv
+```
+
+```bat
+py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 18 --csv results\robustness_18mps.csv
+```
+
+Explain why passing the 14 m/s reference scenario does not guarantee the same
+margin at every cruise setting.

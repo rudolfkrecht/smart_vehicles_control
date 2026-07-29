@@ -1,8 +1,17 @@
-# Lesson 3 — Exercises
+# Lesson 3 — Four numerical engineering exercises
+
+
+**Format:** Four short group calculations followed by a shared solution
+
+**Required output:** Completed calculation and interpretation sheet
+
+This lesson converts the visual observations from Lesson 2 into quantitative
+engineering reasoning. Work on each exercise for approximately six minutes,
+then use the collapsible solution during the four-minute class check.
 
 ## Learning objectives
 
-At the end of this period, students should be able to:
+By the end of this lesson, you should be able to:
 
 - solve the longitudinal force balance at equilibrium;
 - calculate raw and saturated P-controller commands;
@@ -20,9 +29,22 @@ At the end of this period, students should be able to:
 Calculators and short Python expressions are allowed, but a numerical result
 without an equation and interpretation is incomplete.
 
+For each ten-minute exercise, use approximately six minutes for group work and
+four minutes to compare methods. If you finish early, attempt the engineering
+challenge before revealing the worked solution.
+
 ## Model, force definitions and sign convention
 
-All four exercises use the same one-dimensional longitudinal model based on Newton's second law of motion. The positive direction is the vehicle's forward direction, up the road.
+All four exercises use the same one-dimensional longitudinal model. The
+positive direction is the vehicle's forward direction, up the road:
+
+$$
+m a
+=F_\mathrm{drive}
+-F_\mathrm{rolling}
+-F_\mathrm{drag}
+-F_\mathrm{hill}.
+$$
 
 The individual forces are:
 
@@ -91,7 +113,7 @@ $$
 c_\mathrm{drag}=\frac{1}{2}\rho C_DA,
 $$
 
-where air density $\rho$ has unit $\mathrm{kg/m^3}$, $C_D$ is dimensionless
+where air density $\rho$ has unit $\mathrm{kg/m^3}$, $C_D$ is dimensionless,
 and frontal area $A$ has unit $\mathrm{m^2}$. The resulting unit is again
 $\mathrm{kg/m}$.
 
@@ -134,8 +156,8 @@ the opposite sign and gravity would assist the vehicle.
 !!! note "A useful modelling distinction"
     If $F_\mathrm{hill}$ is supplied directly as a fixed force, it remains the
     same when mass is changed. If the physical road angle $\theta$ is fixed,
-    then $F_\mathrm{hill}=mg\sin\theta$ increases with mass. Students should
-    always state which quantity is being held constant.
+    then $F_\mathrm{hill}=mg\sin\theta$ increases with mass. Always state
+    which quantity is being held constant.
 
 
 ## Exercise 1 — Open-loop equilibrium speed
@@ -169,7 +191,7 @@ $$
 2. Calculate the drive force produced by $u=0.35$.
 3. Calculate the equilibrium speed on a flat road.
 4. Convert a $1000\ \mathrm{N}$ opposing hill force into an equivalent road
-   angle for the $1200\ \mathrm{kg}$ vehicle.
+   angle and percentage grade for the $1200\ \mathrm{kg}$ vehicle.
 5. Calculate the equilibrium speed with that uphill disturbance.
 6. Calculate the command required to maintain
    $15\ \mathrm{m/s}$ on that hill.
@@ -190,55 +212,57 @@ $$
 
 ??? success "Worked solution"
     **Step 1 — Define the drive force.**
-$$
-F_\mathrm{drive}=uF_{\max}
-=0.35(4500\ \mathrm{N})
-=1575\ \mathrm{N}.
-$$
 
-On a flat road, this forward force is opposed by rolling resistance and
+    $$
+    F_\mathrm{drive}=uF_{\max}
+    =0.35(4500\ \mathrm{N})
+    =1575\ \mathrm{N}.
+    $$
+
+    On a flat road, this forward force is opposed by rolling resistance and
     quadratic drag.
 
-**Step 2 — Calculate the flat-road equilibrium speed.**
+    **Step 2 — Calculate the flat-road equilibrium speed.**
 
-At equilibrium, acceleration and net force are zero:
+    At equilibrium, acceleration and net force are zero:
 
-$$
-0=F_\mathrm{drive}-F_\mathrm{rolling}-c_\mathrm{drag}v^2.
-$$
+    $$
+    0=F_\mathrm{drive}-F_\mathrm{rolling}-c_\mathrm{drag}v^2.
+    $$
 
-Rearranging:
+    Rearranging:
 
-$$
-v_\mathrm{flat}
-=\sqrt{
-\frac{uF_{\max}-F_\mathrm{rolling}}
-{c_\mathrm{drag}}
-}
-=\sqrt{
-\frac{0.35(4500)-180}{4}
-}
-=18.67\ \mathrm{m/s}.
-$$
+    $$
+    v_\mathrm{flat}
+    =\sqrt{
+    \frac{uF_{\max}-F_\mathrm{rolling}}
+    {c_\mathrm{drag}}
+    }
+    =\sqrt{
+    \frac{0.35(4500)-180}{4}
+    }
+    =18.67\ \mathrm{m/s}.
+    $$
 
-The unit check is:
+    The unit check is:
 
-$$
-\sqrt{\frac{\mathrm{N}}{\mathrm{N/(m/s)^2}}}
-=\sqrt{(\mathrm{m/s})^2}
-=\mathrm{m/s}.
-$$
- **Step 3 — Interpret the $1000\ \mathrm{N}$ hill.**
+    $$
+    \sqrt{\frac{\mathrm{N}}{\mathrm{N/(m/s)^2}}}
+    =\sqrt{(\mathrm{m/s})^2}
+    =\mathrm{m/s}.
+    $$
 
-The equivalent angle is:
+    **Step 3 — Interpret the $1000\ \mathrm{N}$ hill.**
 
-$$
- \theta
-=\arcsin\left(
-\frac{1000}{1200(9.81)}
-\right)
-=4.87^\circ.
-$$
+    The equivalent angle is:
+
+    $$
+    \theta
+    =\arcsin\left(
+    \frac{1000}{1200(9.81)}
+    \right)
+    =4.87^\circ.
+    $$
 
     The corresponding grade is:
 
@@ -248,13 +272,13 @@ $$
 
     **Step 4 — Calculate hill equilibrium speed.**
 
-$$
-v_\mathrm{hill}
-=\sqrt{
-\frac{0.35(4500)-180-1000}{4}
-}
-=9.94\ \mathrm{m/s}.
-$$
+    $$
+    v_\mathrm{hill}
+    =\sqrt{
+    \frac{0.35(4500)-180-1000}{4}
+    }
+    =9.94\ \mathrm{m/s}.
+    $$
 
     A real-valued equilibrium exists because the remaining force available for
     drag is positive:
@@ -658,15 +682,15 @@ hard safety constraints, contractual acceptance requirements or tuning goals.
 ### Engineering extension — compare two incomplete summaries
 
 Controller A has lower RMSE but $14\%$ overshoot. Controller B has higher RMSE
-but no overshoot and a small final error. Ask each group which controller it
-would choose for:
+but no overshoot and a small final error. Decide which controller you would
+choose for:
 
 1. an autonomous shuttle prioritizing passenger comfort;
 2. a test vehicle prioritizing rapid response;
 3. a safety-limited actuator that must never exceed the target.
 
-There is no universal answer without weighting the requirements. The purpose is
-to make students connect numerical metrics to the engineering application.
+There is no universal answer without weighting the requirements. Connect the
+numerical metrics to the intended engineering application.
 
 ## Exercise 4 — PI accumulation and windup
 
@@ -804,8 +828,25 @@ command reaches zero.
     The vehicle must be approximately $1.83\ \mathrm{m/s}$ too fast before
     the raw command stops requesting positive drive.
 
+## Retrieval check
 
-## Exercise 5 — Sensitivity to parameter error
+Answer individually, then compare with a neighbour:
+
+1. At equilibrium, why is net force zero rather than actuator force zero?
+2. What is the difference between raw command and applied command?
+3. Can a controller pass four requirements and fail the overall specification?
+4. Why does PI control need an anti-windup mechanism?
+
+??? success "Answer check"
+    1. The non-zero actuator force balances resistance and disturbance forces.
+    2. Raw command is the controller request; applied command is the clipped
+       request that respects actuator limits.
+    3. Yes. If all listed criteria are mandatory, one failure rejects the
+       complete configuration.
+    4. The integrator can otherwise accumulate error while the actuator cannot
+       deliver the requested force, producing delayed recovery and overshoot.
+
+## Reserve activity — Sensitivity to parameter error
 
 The estimated equilibrium speed uses:
 
@@ -817,6 +858,7 @@ v_\mathrm{eq}
 }.
 $$
 
-Choose and change one parameter by $+20\%$, recalculate the equilibrium
-speed, and rank which uncertainty matters most under the selected operating
-condition. Which parameters influence equilibrium, and which influence the transient in this simplified model?
+Change one parameter by $+20\%$, recalculate the equilibrium speed, and rank
+which uncertainty matters most under the selected operating condition.
+Distinguish parameters that influence equilibrium from those, such as mass,
+that influence only the transient in this simplified model.

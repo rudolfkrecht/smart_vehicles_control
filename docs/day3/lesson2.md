@@ -1,138 +1,250 @@
-# Lesson 2 — Curvature and safe cornering speed
+# Lesson 2 — Hands-on Python demonstrations
 
-## Learning objective
+- **Format:** Guided Python experiments
+- **Main outcome:** Connect ACC equations to plots and state changes
 
-Interpret road curvature, calculate lateral acceleration and convert a
-cornering limit into a local speed limit.
+In this lesson, do not begin by changing parameters. For every experiment:
 
-## Curvature
+1. read the scenario;
+2. predict the result;
+3. run the script;
+4. record evidence;
+5. change one value;
+6. explain the difference.
 
-Curvature describes how quickly path heading changes with travelled distance:
+Run all commands from the extracted Day 3 package root.
 
-\[
-\kappa=\frac{d\psi_{\mathrm{path}}}{ds}.
-\]
+## Prepare the evidence table
 
-For a circle:
+Create a table in your notes:
 
-\[
-|\kappa|=\frac{1}{R}.
-\]
+| Experiment | Prediction | Main observation | Metric or transition | Explanation |
+|---|---|---|---|---|
+| Headway baseline | | | | |
+| Short headway | | | | |
+| Long headway | | | | |
+| Behaviour states | | | | |
 
-Therefore:
+Check the setup:
 
-- \(\kappa=0\): straight road and infinite radius;
-- small \(|\kappa|\): gentle curve and large radius;
-- large \(|\kappa|\): sharp curve and small radius;
-- the sign distinguishes left and right, while safe-speed calculation uses
-  the magnitude.
+```bat
+py -3.12 setup_check.py
+```
 
-## Lateral acceleration
+## Desired following distance
 
-For motion along a curve:
+Open:
 
-\[
-a_y=\frac{v^2}{R}=v^2|\kappa|.
-\]
+```text
+day_3\student\exercise_acc_headway.py
+```
 
-If a design limit \(a_{y,\max}\) is selected:
+Find:
 
-\[
-v_{\mathrm{safe}}=
-\sqrt{\frac{a_{y,\max}}{|\kappa|}}.
-\]
+```python
+TIME_HEADWAY_CANDIDATES_S = (0.7, 1.5, 2.2)
+STANDSTILL_GAP_M = 5.0
+```
 
-The global speed limit must still apply:
+Before running, calculate $d_{\mathrm{des}}$ at $v=12\ \mathrm{m/s}$:
 
-\[
-v_{\mathrm{road}}=
-\min\left(
-v_{\max},
-\sqrt{\frac{a_{y,\max}}{\max(|\kappa|,\varepsilon)}}
-\right).
-\]
+$$
+d_{\mathrm{des}}=d_0+T_hv.
+$$
 
-The small \(\varepsilon\) prevents division by zero on straight sections. It
-does not impose a meaningful curve limit there; the global limit dominates.
-
-## Manual examples
-
-With \(a_{y,\max}=2.5\ \mathrm{m/s^2}\):
-
-| Curvature [1/m] | Radius [m] | Calculated speed [m/s] |
-|---:|---:|---:|
-| 0.01 | 100 | 15.81 |
-| 0.04 | 25 | 7.91 |
-| 0.10 | 10 | 5.00 |
-
-If the global limit is 15 m/s, the first result is clipped to 15 m/s.
-
-## Prepared demonstration
+| $T_h$ | Your calculated desired gap |
+|---:|---:|
+| 0.7 s | |
+| 1.5 s | |
+| 2.2 s | |
 
 Run:
 
 ```bat
-python day_3\demos\lesson2_curvature_safe_speed.py
+py -3.12 day_3\student\exercise_acc_headway.py
 ```
 
-![Curvature and planned road speed](images/lesson2_curvature_safe_speed.png)
+The script compares the candidates in the same lead-vehicle scenario. Record:
 
-Edit only:
+| $T_h$ | Minimum gap | Minimum finite TTC | Collision samples | Completion | Decision |
+|---:|---:|---:|---:|---:|---|
+| 0.7 s | | | | | |
+| 1.5 s | | | | | |
+| 2.2 s | | | | | |
+
+Do not choose the setting that merely completes the greatest distance. First
+reject collision or unacceptably small safety margins.
+
+??? success "Calculation check"
+    At 12 m/s with a 5 m standstill gap:
+
+    $$
+    d_{\mathrm{des}}(0.7)=5+0.7(12)=13.4\ \mathrm m,
+    $$
+
+    $$
+    d_{\mathrm{des}}(1.5)=5+1.5(12)=23.0\ \mathrm m,
+    $$
+
+    $$
+    d_{\mathrm{des}}(2.2)=5+2.2(12)=31.4\ \mathrm m.
+    $$
+
+## Compare complete headway responses
+
+Run the prepared demonstration:
+
+```bat
+py -3.12 day_3\demos\lesson4_acc_headway.py
+```
+
+The lead vehicle:
+
+1. begins at a steady speed;
+2. slows;
+3. stops;
+4. waits;
+5. accelerates again.
+
+Inspect:
+
+- ego and lead speeds;
+- selected speed target;
+- actual and desired gap;
+- TTC during closing;
+- collision markers;
+- completion distance.
+
+Answer:
+
+1. Which controller begins reducing speed earliest?
+2. Which follows most closely?
+3. Which produces the largest minimum gap?
+4. Does the longest headway always provide the best completion?
+5. Which two metrics should be reported together?
+
+Now replace only one candidate in
+`TIME_HEADWAY_CANDIDATES_S`. Rerun and decide whether the new value improves
+the trade-off.
+
+## Behaviour-state transitions
+
+Run:
+
+```bat
+py -3.12 day_3\demos\lesson5_behaviour_states.py
+```
+
+The terminal prints state transitions. Match the printed times to the plot.
+
+Record:
+
+| Transition | Time | Gap | TTC | Why did it occur? |
+|---|---:|---:|---:|---|
+| Cruise → Follow | | | | |
+| Follow → Brake | | | | |
+| Brake → Emergency, if present | | | | |
+| Brake/Follow → Cruise | | | | |
+
+Open the demonstration and find:
 
 ```python
-MAX_LATERAL_ACCELERATION_MPS2 = 2.5
-GLOBAL_SPEED_LIMIT_MPS = 15.0
-EXAMPLE_CURVATURES_PER_M = (0.01, 0.04, 0.10)
+EMERGENCY_TTC_S = 1.25
+BRAKE_ENTRY_RATIO = 0.78
 ```
-
-The upper plot is spatial curvature, not a time history. The lower plot
-assigns a speed to positions along the road.
-
-## Predict before changing
 
 Predict:
 
-1. What happens if \(a_{y,\max}\) changes from 2.5 to 1.5 m/s²?
-2. Does the change affect straight-road speed?
-3. What happens if the sign of curvature changes?
-4. Why is a local speed value exactly at the curve entrance insufficient?
+- lowering `EMERGENCY_TTC_S` makes Emergency earlier or later?
+- increasing `BRAKE_ENTRY_RATIO` makes Brake earlier or later?
 
-The fourth question leads to preview. A vehicle needs distance and time to
-brake before reaching the curve.
+Change only one parameter and rerun.
 
-## PyQt activity
+??? success "Expected direction"
+    Lowering the emergency TTC threshold delays the Emergency transition.
+    Increasing the brake-entry ratio usually activates Brake at a larger gap
+    relative to the desired distance, so it tends to occur earlier.
 
-Select **Lesson 2 — curvature map**. The centre-line overlay uses:
+## Integrated preview
 
-- green: near the global limit;
-- amber: moderate curve-speed reduction;
-- red: sharp curve or low planned speed.
+Run:
 
-Pause on a coloured section and compare:
+```bat
+py -3.12 day_3\demos\lesson6_workshop_preview.py
+```
 
-- current ego speed;
-- selected target;
-- peak lateral acceleration.
+This demonstration combines:
 
-The road colour is a teaching overlay, not a camera-based perception output.
-It comes from the prepared reference path.
+- the speed controller from Day 1;
+- Pure Pursuit from Day 2;
+- traffic target selection;
+- curve-aware speed constraints;
+- state supervision.
 
-## Model limitation
+For one time instant, identify:
 
-Choosing \(a_{y,\max}\) does not explicitly model:
+| Quantity | Value |
+|---|---:|
+| Driver/global target | |
+| Road target | |
+| Traffic target | |
+| Selected target | |
+| Ego speed | |
+| Lead speed | |
+| Behaviour state | |
 
-- tire-road friction;
-- bank angle;
-- combined braking and cornering;
-- load transfer;
-- wet, icy or loose surfaces;
-- actuator delay.
+Check:
 
-It is a transparent planning rule, not a guarantee of real-vehicle stability.
+$$
+v_{\mathrm{selected}}
+=\min(v_{\mathrm{road}},v_{\mathrm{traffic}}).
+$$
 
-## Summary
+## Engineering conclusion
 
-- Curvature is heading change per travelled distance.
-- Lateral acceleration scales with \(v^2|\kappa|\).
-- The square-root relationship turns a lateral-acceleration limit into speed.
-- A usable profile must anticipate future curvature.
+Complete:
+
+```text
+Increasing time headway changed __________.
+Gap and TTC are both needed because __________.
+The most useful plotted evidence was __________.
+One setting that appeared efficient but unsafe was __________.
+The deterministic scenario cannot represent __________.
+```
+
+Keep your table. You will use the same quantities in the numerical and
+simulator lessons.
+
+## Troubleshooting
+
+### A graph window does not appear
+
+Confirm the packages are installed:
+
+```bat
+py -3.12 -m pip install -r requirements.txt
+```
+
+Run the command from the package root, not from inside `day_3\demos`.
+
+### A script finishes but you cannot find its figure
+
+The scripts may save images in the current working directory. Check:
+
+```bat
+dir *.png
+```
+
+### Results change after several edits
+
+Restore the supplied constants, then change one value at a time. A useful
+experiment must keep all other conditions fixed.
+
+## Fast-finisher extension
+
+Create one additional headway candidate between 1.0 and 2.0 s. Write a
+three-sentence engineering argument:
+
+1. one safety metric;
+2. one efficiency or completion metric;
+3. one comfort or control-effort observation.
