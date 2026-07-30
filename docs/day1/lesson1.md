@@ -36,9 +36,7 @@ while responding to measurement error, road load and actuator constraints.
 > A vehicle receives a constant $40\%$ accelerator command on a flat road.
 > Does it accelerate forever, settle to a constant speed, or return to rest?
 
-Commit to one answer before reading the explanation. Increasing aerodynamic
-drag eventually balances the applied force, so the simplified vehicle
-approaches an equilibrium speed.
+Increasing aerodynamic drag eventually balances the applied force, so the simplified vehicle approaches an equilibrium speed.
 
 ### Open-loop versus closed-loop control
 
@@ -80,7 +78,7 @@ Identify each feedback-loop element for cruise control:
 | Plant | Vehicle longitudinal dynamics |
 | Disturbance | Hill, wind, payload or rolling resistance |
 
-## Requirements before tuning a controller
+## Defining requirements before tuning a controller
 
 A controller cannot be called “good” until its requirements are stated. Separate
 three kinds of statement:

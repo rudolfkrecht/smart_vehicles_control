@@ -191,7 +191,7 @@ $$
 2. Calculate the drive force produced by $u=0.35$.
 3. Calculate the equilibrium speed on a flat road.
 4. Convert a $1000\ \mathrm{N}$ opposing hill force into an equivalent road
-   angle and percentage grade for the $1200\ \mathrm{kg}$ vehicle.
+   angle for the $1200\ \mathrm{kg}$ vehicle.
 5. Calculate the equilibrium speed with that uphill disturbance.
 6. Calculate the command required to maintain
    $15\ \mathrm{m/s}$ on that hill.
@@ -264,11 +264,7 @@ $$
     =4.87^\circ.
     $$
 
-    The corresponding grade is:
-
-    $$
-    100\tan(4.87^\circ)=8.52\%.
-    $$
+   
 
     **Step 4 — Calculate hill equilibrium speed.**
 
@@ -335,7 +331,7 @@ $C_\mathrm{rr}mg$, so additional mass can also change the steady-state balance.
 
 Calculate the minimum drive-force limit needed to maintain $15\ \mathrm{m/s}$
 under a $4000\ \mathrm{N}$ hill load. For a $1200\ \mathrm{kg}$ vehicle, also
-calculate the equivalent road angle and grade. Compare the required drive force
+calculate the equivalent road angle. Compare the required drive force
 with the default $4500\ \mathrm{N}$ limit.
 
 ??? success "Challenge answer"
@@ -354,10 +350,6 @@ with the default $4500\ \mathrm{N}$ limit.
     \theta
     =\arcsin\left(\frac{4000}{1200(9.81)}\right)
     =19.86^\circ,
-    $$
-
-    $$
-    \mathrm{grade}=100\tan(19.86^\circ)=36.13\%.
     $$
 
     This is an extremely steep road. The large value is useful as an actuator
