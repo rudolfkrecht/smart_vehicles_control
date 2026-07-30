@@ -18,8 +18,11 @@ DEMO_OUTPUTS = {
 
 def main() -> None:
     demo_directory = Path(__file__).resolve().parent
-    package_root = demo_directory.parents[1]
-    image_directory = package_root / "docs" / "images"
+    repository_root = demo_directory.parents[2]
+    image_directory = (
+        repository_root / "docs" / "assets" / "images" / "day2"
+    )
+    image_directory.mkdir(parents=True, exist_ok=True)
     for script_name, image_name in DEMO_OUTPUTS.items():
         command = [
             sys.executable,
@@ -29,7 +32,7 @@ def main() -> None:
             str(image_directory / image_name),
         ]
         print("Running:", " ".join(command))
-        subprocess.run(command, check=True, cwd=package_root)
+        subprocess.run(command, check=True, cwd=repository_root)
 
 
 if __name__ == "__main__":

@@ -78,8 +78,8 @@ def add_control_row(ax, y, label, value):
 
 
 def main() -> None:
-    root = Path(__file__).resolve().parents[2]
-    output = root / "docs" / "images" / "day4_vehicle_simulator_preview.png"
+    root = Path(__file__).resolve().parents[3]
+    output = root / "docs" / "assets" / "images" / "day4" / "day4_vehicle_simulator_preview.png"
     case = evaluation_cases()[-1]
     result = run_robust(
         robust_scenario_from_case(BALANCED_CONFIGURATION, case)

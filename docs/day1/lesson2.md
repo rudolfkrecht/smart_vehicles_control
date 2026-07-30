@@ -16,20 +16,14 @@ By the end of this lesson, you should be able to:
 
 ## Before the lesson
 
-Open Command Prompt or a terminal in the repository root and verify:
-
-```bash
-python setup_check.py
-```
-
 Keep the following five files open in an editor:
 
 ```text
-day_1_longitudinal/demos/lesson1_feedback_preview.py
-day_1_longitudinal/demos/lesson3_open_loop.py
-day_1_longitudinal/demos/lesson2_response_metrics.py
-day_1_longitudinal/demos/lesson4_p_control.py
-day_1_longitudinal/demos/lesson6_windup.py
+courses\day_1\demos\lesson1_feedback_preview.py
+courses\day_1\demos\lesson2_response_metrics.py
+courses\day_1\demos\lesson3_open_loop.py
+courses\day_1\demos\lesson4_p_control.py
+courses\day_1\demos\lesson6_windup.py
 ```
 
 Only edit values in the marked `SAFE LIVE MODIFICATIONS` blocks. The prepared
@@ -43,13 +37,12 @@ figures on this page provide a fallback if a projector or plotting window fails.
 > begins at $t=15\ \mathrm{s}$, which vehicle returns closest to
 > $15\ \mathrm{m/s}$?
 
-Write two parts: the predicted vehicle and the causal mechanism. “The blue
-line” is not a sufficient answer.
+Write two parts: the predicted vehicle and the causal mechanism.
 
 ### Run
 
 ```bash
-python day_1_longitudinal/demos/lesson1_feedback_preview.py
+python courses\day_1\demos\lesson1_feedback_preview.py
 ```
 
 ![Open-loop and feedback comparison](images/lesson1_feedback_preview.png)
@@ -107,7 +100,7 @@ Also predict whether the three vehicles have the same initial acceleration.
 ### Run
 
 ```bash
-python day_1_longitudinal/demos/lesson3_open_loop.py
+python courses\day_1\demos\lesson3_open_loop.py
 ```
 
 ![Open-loop drag comparison](images/lesson3_open_loop.png)
@@ -182,7 +175,7 @@ For $K_P=0.08,\ 0.35,\ 1.20$, predict:
 ### Run the gain comparison
 
 ```bash
-python day_1_longitudinal/demos/lesson4_p_control.py
+python courses\day_1\demos\esson4_p_control.py
 ```
 
 ![Effect of proportional gain](images/lesson4_p_control.png)
@@ -202,7 +195,7 @@ KP_VALUES = (0.35, 1.20, 2.00)
 ### Run the prepared metrics comparison
 
 ```bash
-python day_1_longitudinal/demos/lesson2_response_metrics.py
+python courses\day_1\demos\lesson2_response_metrics.py
 ```
 
 ![Response metrics comparison](images/lesson2_response_metrics.png)
@@ -237,7 +230,7 @@ accepted balance among speed, accuracy, command effort, comfort and robustness.
 Run the PI starter once with `KI = 0.00`:
 
 ```bash
-python day_1_longitudinal/student/challenge_pi_control.py
+python courses\day_1\demos\challenge_pi_control.py
 ```
 
 Then edit:
@@ -262,7 +255,7 @@ The accumulated integral state supplies the holding command.
 Predict what happens after a very steep hill ends:
 
 ```bash
-python day_1_longitudinal/demos/lesson6_windup.py
+python courses\day_1\demos\lesson6_windup.py
 ```
 
 ![Integral windup comparison](images/lesson6_windup.png)
@@ -288,7 +281,7 @@ Integral action solves persistent offset but creates an internal state that must
 be managed under actuator constraints. Anti-windup is part of the controller,
 not an optional plotting improvement.
 
-## 40–45 min — Evidence table
+## Evidence table
 
 Complete this table before discussion:
 

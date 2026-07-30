@@ -47,8 +47,8 @@ def draw_car(ax, x, y, heading, color, label):
 
 
 def main() -> None:
-    root = Path(__file__).resolve().parents[2]
-    output = root / "docs" / "images" / "day3_vehicle_simulator_preview.png"
+    root = Path(__file__).resolve().parents[3]
+    output = root / "docs" / "assets" / "images" / "day3" / "day3_vehicle_simulator_preview.png"
     result = run_integrated(IntegratedScenario(duration=27.0))
     index = min(430, len(result.time) - 1)
 

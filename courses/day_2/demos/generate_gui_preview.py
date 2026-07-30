@@ -16,8 +16,8 @@ from simulator.tracking import PathFollowingScenario, run_path_following
 
 
 def main() -> None:
-    root = Path(__file__).resolve().parents[2]
-    output = root / "docs" / "images" / "day2_vehicle_simulator_preview.png"
+    root = Path(__file__).resolve().parents[3]
+    output = root / "docs" / "assets" / "images" / "day2" / "day2_vehicle_simulator_preview.png"
     result = run_path_following(
         scenario=PathFollowingScenario(
             duration=7.0,

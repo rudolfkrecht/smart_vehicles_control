@@ -7,7 +7,8 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[2]
+COURSES = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUTPUTS = {
     "lesson1_integrated_control.py": "lesson1_integrated_control.png",
     "lesson2_curvature_safe_speed.py": "lesson2_curvature_safe_speed.png",
@@ -19,7 +20,7 @@ OUTPUTS = {
 
 
 def main() -> None:
-    image_directory = ROOT / "docs" / "images"
+    image_directory = ROOT / "docs" / "assets" / "images" / "day3"
     image_directory.mkdir(parents=True, exist_ok=True)
     for script, image in OUTPUTS.items():
         command = [
