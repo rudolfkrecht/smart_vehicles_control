@@ -60,7 +60,7 @@ $$
 Then run:
 
 ```bat
-py -3.12 day_4\student\exercise_metrics.py
+python courses\day_4\student\exercise_metrics.py
 ```
 
 ??? success "Solution"

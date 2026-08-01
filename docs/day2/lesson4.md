@@ -12,7 +12,7 @@ reference path, preview geometry, trajectory and metrics at the same time.
 From the package root:
 
 ```bat
-py -3.12 day_2\gui\day2_vehicle_simulator.py
+python courses\day_2\gui\day2_vehicle_simulator.py
 ```
 
 ![Day 2 PyQt path-following laboratory](images/day2_vehicle_simulator_preview.png)

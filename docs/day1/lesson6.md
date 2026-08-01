@@ -141,7 +141,7 @@ instead.
 Run:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Alternatively, double-click:
@@ -171,7 +171,7 @@ Close the graphical simulator or open a second terminal in the same folder.
 Run the unchanged Student controller for exactly 17 seconds:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv straight_baseline.csv
+python run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv straight_baseline.csv
 ```
 
 The terminal reports:
@@ -185,7 +185,7 @@ The terminal reports:
 Read the final road position and final speed from the CSV:
 
 ```bat
-py -3.12 -c "import csv; rows=list(csv.DictReader(open('straight_baseline.csv'))); r=rows[-1]; print('track_s =', r['track_s_m'], 'm, speed =', r['speed_mps'], 'm/s')"
+python -c "import csv; rows=list(csv.DictReader(open('straight_baseline.csv'))); r=rows[-1]; print('track_s =', r['track_s_m'], 'm, speed =', r['speed_mps'], 'm/s')"
 ```
 
 Record the baseline:
@@ -310,7 +310,7 @@ For every candidate:
 Example for the first candidate:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv p_run_1.csv
+python run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv p_run_1.csv
 ```
 
 Use `p_run_2.csv` and `p_run_3.csv` for the next candidates.
@@ -421,7 +421,7 @@ useful improvement.
 Start the graphical simulator:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Then:
@@ -463,13 +463,13 @@ If your changes do not appear, save the file and press **Reset** again.
 Run the final controller:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv straight_final.csv
+python run_simulator.py --headless --controller student --duration 17 --target-speed 15 --csv straight_final.csv
 ```
 
 Inspect its final position and speed:
 
 ```bat
-py -3.12 -c "import csv; rows=list(csv.DictReader(open('straight_final.csv'))); r=rows[-1]; print('track_s =', r['track_s_m'], 'm, speed =', r['speed_mps'], 'm/s')"
+python -c "import csv; rows=list(csv.DictReader(open('straight_final.csv'))); r=rows[-1]; print('track_s =', r['track_s_m'], 'm, speed =', r['speed_mps'], 'm/s')"
 ```
 
 Complete the final scorecard:

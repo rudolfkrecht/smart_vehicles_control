@@ -29,7 +29,7 @@ For every run:
 From the Day 3 package root:
 
 ```bat
-py -3.12 day_3\gui\day3_vehicle_simulator.py
+python courses\day_3\gui\day3_vehicle_simulator.py
 ```
 
 Select:

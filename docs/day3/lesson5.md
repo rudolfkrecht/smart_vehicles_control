@@ -45,7 +45,7 @@ From the package root:
 
 ```bat
 cd python_3d_adas_day3
-py -3.12 run_simulator.py
+pyton run_simulator.py
 ```
 
 In the graphical interface:
@@ -83,7 +83,7 @@ mode = "CRUISE"
 It ignores the lead vehicle. Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 70 --target-speed 14 --csv results\cruise_only_baseline.csv
+python run_simulator.py --headless --controller student --duration 70 --target-speed 14 --csv results\cruise_only_baseline.csv
 ```
 
 Create `results` first if needed:
@@ -238,7 +238,7 @@ These caps request a minimum braking action in the two safety modes.
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 70 --target-speed 14 --csv results\guided_acc.csv
+python run_simulator.py --headless --controller student --duration 70 --target-speed 14 --csv results\guided_acc.csv
 ```
 
 Record:

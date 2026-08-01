@@ -19,7 +19,7 @@ Run commands from the extracted Day 4 package root.
 Check the environment:
 
 ```bat
-py -3.12 setup_check.py
+python setup_check.py
 ```
 
 Create this evidence table:
@@ -37,7 +37,7 @@ Create this evidence table:
 Run:
 
 ```bat
-py -3.12 day_4\demos\lesson1_nominal_is_not_enough.py
+python courses\day_4\demos\lesson1_nominal_is_not_enough.py
 ```
 
 The script uses one controller in two cases:
@@ -67,7 +67,7 @@ Explain why one passing case does not prove the other.
 Run:
 
 ```bat
-py -3.12 day_4\demos\lesson2_quantitative_evaluation.py
+python courses\day_4\demos\lesson2_quantitative_evaluation.py
 ```
 
 The terminal first checks:
@@ -115,7 +115,7 @@ rejected? Give one numerical example.
 Run:
 
 ```bat
-py -3.12 day_4\demos\lesson3_repeatable_batch_testing.py
+python courses\day_4\demos\lesson3_repeatable_batch_testing.py
 ```
 
 The same controller is tested from:
@@ -162,7 +162,7 @@ ENABLE_NOISE = True
 Run:
 
 ```bat
-py -3.12 day_4\student\exercise_batch_testing.py --no-show
+python courses\day_4\student\exercise_batch_testing.py --no-show
 ```
 
 Why is `RANDOM_SEED = 220` important when two controllers are compared?
@@ -172,7 +172,7 @@ Why is `RANDOM_SEED = 220` important when two controllers are compared?
 Run:
 
 ```bat
-py -3.12 day_4\demos\lesson4_challenge_preparation.py
+python courses\day_4\demos\lesson4_challenge_preparation.py
 ```
 
 Compare the aggressive and balanced configurations.
@@ -215,7 +215,7 @@ __________.
 Install the packages:
 
 ```bat
-py -3.12 -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### A command reports that a module is missing

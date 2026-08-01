@@ -15,7 +15,7 @@ implementing the focused range-sensor supervisor in Lesson 5.
 Run:
 
 ```bat
-py -3.12 day_4\gui\day4_vehicle_simulator.py
+python courses\day_4\gui\day4_vehicle_simulator.py
 ```
 
 Identify:

@@ -34,13 +34,7 @@ By the end of the lesson, you should be able to:
 From the root of the repository on Windows, run:
 
 ```bash
-py -3.12 day_1_longitudinal/gui/day1_vehicle_simulator.py
-```
-
-If the `py` launcher is unavailable, use:
-
-```bash
-python day_1_longitudinal/gui/day1_vehicle_simulator.py
+python day_1/gui/day1_vehicle_simulator.py
 ```
 
 Keep the simulator open for the entire lesson. Before each new test:
@@ -110,9 +104,9 @@ $$
 
 Therefore, the value used here can be written equivalently as:
 
-$
+$$
 c=4\ \mathrm{N/(m/s)^2}=4\ \mathrm{kg/m}.
-$
+$$
 
 Do not confuse $c$ with $C_D$. The parameter $c$ in this simplified model is **not** the dimensionless aerodynamic drag coefficient $C_D$. In a more detailed model, $F_\mathrm{drag}=\frac{1}{2}\rho C_D A v^2$, so the simplified coefficient combines several physical quantities:
 $$
@@ -123,7 +117,6 @@ $$
 
 ## Exercise 1 — Find the open-loop operating point
 
-- **Time:** 0–10 minutes
 - **Scenario:** Open loop, flat road
 - **Question:** What constant command should maintain $15\ \mathrm{m/s}$?
 
@@ -187,8 +180,7 @@ be below, approximately equal to, or above $15\ \mathrm{m/s}$.
 
 1. Select **Open loop**.
 2. Select **Flat road** or set the hill disturbance to zero.
-3. Set the initial speed to $15\ \mathrm{m/s}$ if that option is available.
-   Otherwise, allow the vehicle to accelerate from rest.
+3. Allow the vehicle to accelerate from rest.
 4. Test $u=0.18$, $u=0.24$ and $u=0.30$.
 5. Reset before every run.
 6. Record the final speed and whether the vehicle was still accelerating at the
@@ -229,7 +221,6 @@ Answer together:
 
 ## Exercise 2 — Tune a P controller on a flat road
 
-- **Time:** 10–20 minutes
 - **Scenario:** P controller, flat road
 - **Question:** Which proportional gain gives the best response while respecting
   the requirements?
@@ -287,7 +278,7 @@ physical command.
 
 ### Step 2: predict
 
-Rank the gains from 1 to 3 for:
+Rank the gains from 1 to 2 for:
 
 - fastest expected rise;
 - smallest expected steady-state error;
@@ -350,7 +341,6 @@ Discuss:
 
 ## Exercise 3 — Test the P controller on a $5^\circ$ uphill road
 
-- **Time:** 20–30 minutes
 - **Scenario:** P + hill
 - **Question:** Can the selected P controller maintain the reference speed under
   a constant road-load disturbance?
@@ -510,7 +500,6 @@ Answer:
 
 ## Exercise 4 — Add integral action
 
-- **Time:** 30–40 minutes
 - **Scenario:** PI + hill
 - **Question:** Can integral action remove the persistent hill error without
   creating an unacceptable transient response?
@@ -632,7 +621,7 @@ One condition that still requires testing is:
 
 ---
 
-## 40–45 min — Compare results and write a conclusion
+## Compare results and write a conclusion
 
 Prepare to report four values:
 

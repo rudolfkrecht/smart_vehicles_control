@@ -37,7 +37,7 @@ student_controller.py
 Start the simulator:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Select **Student** from the controller list and press **Reset**. The starter is

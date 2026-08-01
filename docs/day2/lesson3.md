@@ -60,7 +60,7 @@ A car has:
 | Initial heading | $\psi_0=15^\circ$ |
 | Speed | $v=10$ m/s |
 | Wheelbase | $L=2.8$ m |
-| Steering | $\delta=8^\circ$ |
+| Steering angle | $\delta=8^\circ$ |
 | Time step | $\Delta t=0.10$ s |
 
 Calculate:

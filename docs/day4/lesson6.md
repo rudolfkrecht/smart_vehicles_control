@@ -89,7 +89,7 @@ copy student_controller.py results\student_controller_start.py
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario nominal --duration 105 --target-speed 14 --csv results\nominal.csv
+python run_simulator.py --headless --controller student --scenario nominal --duration 105 --target-speed 14 --csv results\nominal.csv
 ```
 
 Record:
@@ -112,7 +112,7 @@ incorrect health condition.
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 14 --csv results\radar_dropout.csv
+python run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 14 --csv results\radar_dropout.csv
 ```
 
 Compare with nominal:
@@ -134,11 +134,11 @@ fallback.
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario brake_fade --duration 105 --target-speed 14 --csv results\brake_fade.csv
+python run_simulator.py --headless --controller student --scenario brake_fade --duration 105 --target-speed 14 --csv results\brake_fade.csv
 ```
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario lateral_push --duration 105 --target-speed 14 --csv results\lateral_push.csv
+python run_simulator.py --headless --controller student --scenario lateral_push --duration 105 --target-speed 14 --csv results\lateral_push.csv
 ```
 
 Record:
@@ -162,7 +162,7 @@ Interpret:
 The evaluator runs all five cases using a new instance of the same controller:
 
 ```bat
-py -3.12 evaluate_project.py --controller student --duration 105 --target-speed 14 --csv results\day4_results.csv
+python evaluate_project.py --controller student --duration 105 --target-speed 14 --csv results\day4_results.csv
 ```
 
 Copy the terminal table:
@@ -218,7 +218,7 @@ suite after any change.
 Run:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Choose:
@@ -250,7 +250,7 @@ copy student_controller.py results\student_controller_final.py
 Run the final suite once:
 
 ```bat
-py -3.12 evaluate_project.py --controller student --duration 105 --target-speed 14 --csv results\day4_results_final.csv
+python evaluate_project.py --controller student --duration 105 --target-speed 14 --csv results\day4_results_final.csv
 ```
 
 Do not edit after this run. Record:
@@ -296,7 +296,7 @@ This evidence applies only to __________ and does not prove __________.
     Run:
 
     ```bat
-    py -3.12 evaluate_project.py --controller solution --duration 105 --target-speed 14
+    python evaluate_project.py --controller solution --duration 105 --target-speed 14
     ```
 
     Expected approximate results:
@@ -317,11 +317,11 @@ This evidence applies only to __________ and does not prove __________.
 Compare the `radar_dropout` case at target speeds 12 and 18 m/s:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 12 --csv results\dropout_12mps.csv
+python run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 12 --csv results\dropout_12mps.csv
 ```
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 18 --csv results\dropout_18mps.csv
+python run_simulator.py --headless --controller student --scenario radar_dropout --duration 105 --target-speed 18 --csv results\dropout_18mps.csv
 ```
 
 Explain why passing at 14 m/s does not prove an identical margin throughout an

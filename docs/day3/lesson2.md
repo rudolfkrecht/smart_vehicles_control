@@ -28,7 +28,7 @@ Create a table in your notes:
 Check the setup:
 
 ```bat
-py -3.12 setup_check.py
+python setup_check.py
 ```
 
 ## Desired following distance
@@ -61,7 +61,7 @@ $$
 Run:
 
 ```bat
-py -3.12 day_3\student\exercise_acc_headway.py
+python courses\day_3\student\exercise_acc_headway.py
 ```
 
 The script compares the candidates in the same lead-vehicle scenario. Record:
@@ -95,7 +95,7 @@ reject collision or unacceptably small safety margins.
 Run the prepared demonstration:
 
 ```bat
-py -3.12 day_3\demos\lesson4_acc_headway.py
+python courses\day_3\demos\lesson4_acc_headway.py
 ```
 
 The lead vehicle:
@@ -132,7 +132,7 @@ the trade-off.
 Run:
 
 ```bat
-py -3.12 day_3\demos\lesson5_behaviour_states.py
+python courses\day_3\demos\lesson5_behaviour_states.py
 ```
 
 The terminal prints state transitions. Match the printed times to the plot.
@@ -170,7 +170,7 @@ Change only one parameter and rerun.
 Run:
 
 ```bat
-py -3.12 day_3\demos\lesson6_workshop_preview.py
+python courses\day_3\demos\lesson6_workshop_preview.py
 ```
 
 This demonstration combines:
@@ -222,7 +222,7 @@ simulator lessons.
 Confirm the packages are installed:
 
 ```bat
-py -3.12 -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 Run the command from the package root, not from inside `day_3\demos`.

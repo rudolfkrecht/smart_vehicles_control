@@ -34,7 +34,7 @@ Do not change the Day 1 PI or Day 2 Pure Pursuit parameters.
 Use a 105-second headless run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14
+python run_simulator.py --headless --controller student --duration 105 --target-speed 14
 ```
 
 | Requirement | Pass condition |
@@ -101,7 +101,7 @@ self.CLOSING_GAIN = 0.50
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\baseline_acc.csv
+python run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\baseline_acc.csv
 ```
 
 Copy the printed values:
@@ -141,7 +141,7 @@ values.
 Run each candidate with a unique filename:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\spacing_1.csv
+python run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\spacing_1.csv
 ```
 
 | $d_0$ | $T_h$ | Min gap | Min TTC | Gap error | Completion | Decision |
@@ -161,7 +161,7 @@ Keep your selected spacing policy. Compare at least three gain pairs:
 Use:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\gain_1.csv
+python run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\gain_1.csv
 ```
 
 | $K_d$ | $K_{\Delta v}$ | Min gap | Speed RMSE | Peak decel. | Gap error | Emergency | Decision |
@@ -208,7 +208,7 @@ Each single objective can produce a poor result elsewhere.
 Run:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Select **Student**, set 14 m/s and press **Reset**.
@@ -232,7 +232,7 @@ pressed **Reset** after saving `student_controller.py`.
 Repeat the exact final headless run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\final_acc_run.csv
+python run_simulator.py --headless --controller student --duration 105 --target-speed 14 --csv results\final_acc_run.csv
 ```
 
 Complete:
@@ -310,11 +310,11 @@ The simulator omits ___, so I cannot conclude ___ about a real vehicle.
 Keep the final controller and compare:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\robustness_12mps.csv
+python run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\robustness_12mps.csv
 ```
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 18 --csv results\robustness_18mps.csv
+python run_simulator.py --headless --controller student --duration 75 --target-speed 18 --csv results\robustness_18mps.csv
 ```
 
 Explain why passing the 14 m/s reference scenario does not guarantee the same

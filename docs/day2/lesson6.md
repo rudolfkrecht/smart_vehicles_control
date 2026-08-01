@@ -80,7 +80,7 @@ self.SPEED_GAIN_S = 0.0
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\baseline_fixed.csv
+python run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\baseline_fixed.csv
 ```
 
 Copy the printed metrics:
@@ -140,7 +140,7 @@ Test at least three configurations. Change one parameter at a time.
 Use:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\candidate_1.csv
+python run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\candidate_1.csv
 ```
 
 Use a new filename for each run.
@@ -166,11 +166,11 @@ Do not optimize only mean error.
 Keep the same parameters and perform two shorter comparison runs:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 45 --target-speed 8 --csv results\robustness_8mps.csv
+python run_simulator.py --headless --controller student --duration 45 --target-speed 8 --csv results\robustness_8mps.csv
 ```
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 45 --target-speed 16 --csv results\robustness_16mps.csv
+python run_simulator.py --headless --controller student --duration 45 --target-speed 16 --csv results\robustness_16mps.csv
 ```
 
 These are sensitivity tests; they do not use the full-lap acceptance criteria.
@@ -191,7 +191,7 @@ limitation and prepares the curve-aware speed-control work of the next stage.
 Start:
 
 ```bat
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 Select **Student**, set 12 m/s, reset and watch one full lap.
@@ -214,7 +214,7 @@ Repeat the final headless command so the submitted metrics and CSV come from the
 same parameter set:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\final_full_lap.csv
+python run_simulator.py --headless --controller student --duration 75 --target-speed 12 --csv results\final_full_lap.csv
 ```
 
 ## Submit the checkpoint

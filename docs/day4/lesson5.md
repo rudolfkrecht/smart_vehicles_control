@@ -52,7 +52,7 @@ From the package root:
 
 ```bat
 cd python_3d_adas_day4
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 In the GUI:
@@ -92,7 +92,7 @@ mkdir results
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario radar_dropout --duration 50 --target-speed 14 --csv results\radar_dropout_baseline.csv
+python run_simulator.py --headless --controller student --scenario radar_dropout --duration 50 --target-speed 14 --csv results\radar_dropout_baseline.csv
 ```
 
 Record:
@@ -229,7 +229,7 @@ supervisor_active=supervisor_active,
 Run:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --scenario radar_dropout --duration 50 --target-speed 14 --csv results\radar_dropout_supervised.csv
+python run_simulator.py --headless --controller student --scenario radar_dropout --duration 50 --target-speed 14 --csv results\radar_dropout_supervised.csv
 ```
 
 Record:

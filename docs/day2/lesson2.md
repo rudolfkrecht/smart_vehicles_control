@@ -12,7 +12,7 @@ and observations. Exchange roles after Demonstration 2.
 Open Command Prompt in the package root:
 
 ```bat
-py -3.12 setup_check.py
+python setup_check.py
 ```
 
 For every demonstration:
@@ -28,7 +28,7 @@ For every demonstration:
 Run:
 
 ```bat
-py -3.12 day_2\demos\lesson1_bicycle_motion.py
+python courses\day_2\demos\lesson1_bicycle_motion.py
 ```
 
 Three vehicles receive constant steering commands.
@@ -68,7 +68,7 @@ $$
 Run:
 
 ```bat
-py -3.12 day_2\demos\lesson2_steering_exploration.py
+python courses\day_2\demos\lesson2_steering_exploration.py
 ```
 
 The script changes one variable at a time.
@@ -109,7 +109,7 @@ $$
 Run:
 
 ```bat
-py -3.12 day_2\demos\lesson3_path_errors.py
+python courses\day_2\demos\lesson3_path_errors.py
 ```
 
 Identify:
@@ -152,7 +152,7 @@ Preview point means:
 Run:
 
 ```bat
-py -3.12 day_2\demos\lesson4_pure_pursuit.py
+python courses\day_2\demos\lesson4_pure_pursuit.py
 ```
 
 The script compares short, balanced and long fixed look-ahead distances on the
@@ -186,7 +186,7 @@ Complete one sentence for each observation:
 If a graph window cannot open, run:
 
 ```bat
-py -3.12 day_2\demos\run_all_demos.py
+python courses\day_2\demos\run_all_demos.py
 ```
 
 The numerical calculations remain available, and prepared figures are included

@@ -39,7 +39,7 @@ From the package root:
 
 ```bat
 cd python_3d_adas_day2
-py -3.12 run_simulator.py
+python run_simulator.py
 ```
 
 In the graphical interface:
@@ -198,7 +198,7 @@ then 6.0 and 10.0 m. Reset after every edit.
 Use reproducible 40-second headless runs:
 
 ```bat
-py -3.12 run_simulator.py --headless --controller student --duration 40 --target-speed 12 --csv results\fixed_6m.csv
+python run_simulator.py --headless --controller student --duration 40 --target-speed 12 --csv results\fixed_6m.csv
 ```
 
 Change the filename for each configuration.
