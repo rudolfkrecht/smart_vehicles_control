@@ -26,7 +26,7 @@ The exercises use a lightweight Python environment that runs on Windows and Ubun
 === "Windows PowerShell"
 
     ```powershell
-    py -3.12 -m venv .venv
+    python -m venv .venv
     .\.venv\Scripts\Activate.ps1
     python -m pip install --upgrade pip
     pip install -r requirements.txt
@@ -37,7 +37,7 @@ The exercises use a lightweight Python environment that runs on Windows and Ubun
     ```bash
     python3 -m venv .venv
     source .venv/bin/activate
-    python -m pip install --upgrade pip
+    python3 -m pip install --upgrade pip
     pip install -r requirements.txt
     ```
 
@@ -53,8 +53,6 @@ The expected final line is:
 Setup check passed.
 ```
 
-!!! warning
-    Exercise files and `requirements.txt` will be added with the Day 1 practical package. The documentation site itself can already be previewed using the commands below.
 
 ## Preview this website locally
 
