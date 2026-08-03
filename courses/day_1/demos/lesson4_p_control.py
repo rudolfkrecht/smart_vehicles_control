@@ -20,7 +20,7 @@ from simulator.script_helpers import plot_arguments  # noqa: E402
 # Ask for predictions before running each set.
 # Suggested values: 0.05, 0.20, 0.50, 1.20
 # ---------------------------------------------------------------------------
-KP_VALUES = (0.08, 0.35, 1.20)
+KP_VALUES = (0.75, 0.70, 0.85)
 # ---------------------------------------------------------------------------
 
 

@@ -30,7 +30,7 @@ from simulator.script_helpers import plot_arguments  # noqa: E402
 # ---------------------------------------------------------------------------
 # SAFE LIVE MODIFICATIONS
 # ---------------------------------------------------------------------------
-ENABLE_HILL = True
+ENABLE_HILL = False
 HILL_FORCE_N = 1_500.0
 OPEN_LOOP_COMMAND = 0.35
 TARGET_SPEED_MPS = 15.0

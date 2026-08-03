@@ -31,7 +31,7 @@ from simulator.script_helpers import plot_arguments  # noqa: E402
 # Suggested command values: 0.20, 0.35, 0.60
 # Suggested drag values: 2.0, 4.0, 8.0
 # ---------------------------------------------------------------------------
-OPEN_LOOP_COMMAND = 0.35
+OPEN_LOOP_COMMAND = 0.60
 DRAG_VALUES = (2.0, 4.0, 8.0)
 # ---------------------------------------------------------------------------
 

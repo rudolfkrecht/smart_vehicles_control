@@ -194,7 +194,7 @@ Record the baseline:
 |---|---:|---:|:---:|
 | Rise time | | $\leq10\ \mathrm{s}$ | |
 | Overshoot | | $<10\%$ | |
-| Final speed error | | $|e_\mathrm{final}|<0.50\ \mathrm{m/s}$ | |
+| Final speed error | | $\lvert e_{\mathrm{final}} \rvert < 0.50\,\mathrm{m/s}$ | |
 | Position after 17 s | | $200 \leq s <220\ \mathrm{m}$ | |
 | Maximum lane error | | $<0.25\ \mathrm{m}$ | |
 
