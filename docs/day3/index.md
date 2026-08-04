@@ -21,7 +21,7 @@ You will use these signals to implement Adaptive Cruise Control (ACC), test it
 in stop-and-go traffic and explain the safety–efficiency trade-off of its
 parameters.
 
-![Day 3 cumulative 3D-like ACC simulator](../images/day3_3d_acc_preview.png)
+![Day 3 cumulative 3D-like ACC simulator](images/day3_3d_acc_preview.png)
 
 ## Day plan
 
@@ -64,8 +64,8 @@ You should be able to:
 Open Command Prompt in the extracted Day 3 package:
 
 ```bat
-py -3.12 -m pip install -r requirements.txt
-py -3.12 setup_check.py
+python -m pip install -r requirements.txt
+python setup_check.py
 ```
 
 The final line should be:
