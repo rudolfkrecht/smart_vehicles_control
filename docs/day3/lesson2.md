@@ -1,239 +1,250 @@
-# Lesson 2 — Practical Python demonstrations: integration and robustness
+# Lesson 2 — Hands-on Python demonstrations
 
-- **Format:** Prepared simulations, controlled experiments and team design task
-- **Main outcome:** Tune a coupled ADAS stack using predictions and evidence,
-  rather than optimizing one loop in isolation
+- **Format:** Guided Python experiments
+- **Main outcome:** Connect ACC equations to plots and state changes
 
-## Prepare one evidence table
+In this lesson, do not begin by changing parameters. For every experiment:
 
-Use one worksheet for all demonstrations. Before each run, write a prediction;
-after the run, record evidence rather than only saying that the plot “looks
-better.”
+1. read the scenario;
+2. predict the result;
+3. run the script;
+4. record evidence;
+5. change one value;
+6. explain the difference.
 
-| Demonstration | Predicted active constraint/failure | Metric expected to change | Observation | Engineering conclusion |
+Run all commands from the extracted Day 3 package root.
+
+## Prepare the evidence table
+
+Create a table in your notes:
+
+| Experiment | Prediction | Main observation | Metric or transition | Explanation |
 |---|---|---|---|---|
-| Integrated nominal control | | | | |
-| Nominal versus disturbance | | | | |
-| Quantitative scorecard | | | | |
-| Complete-design comparison | | | | |
+| Headway baseline | | | | |
+| Short headway | | | | |
+| Long headway | | | | |
+| Behaviour states | | | | |
 
-## Demonstrate the coupled nominal controller
-
-Run from the repository root:
+Check the setup:
 
 ```bat
-python courses\day_3\demos\lesson1_integrated_control.py --no-show
+python setup_check.py
 ```
 
-The plot exposes cruise, curve and traffic limits in one run. Identify every
-change of active speed constraint and explain why the PI controller must not
-select among these targets itself.
-
-## Show why a nominal success is insufficient
-
-Run the same controller under a defined disturbance:
-
-```bat
-python courses\day_3\demos\lesson1_nominal_is_not_enough.py --no-show
-```
-
-![Nominal and disturbed responses](images/lesson1_nominal_is_not_enough.png)
-
-Find a metric that remains acceptable on average while a short event becomes
-unacceptable. This is the practical reason to keep maximum error, minimum gap
-and safety gates alongside mean or RMS metrics.
-
-## Read a quantitative scorecard
-
-```bat
-python courses\day_3\demos\lesson2_quantitative_evaluation.py --no-show
-```
-
-![Quantitative controller evaluation](images/lesson2_quantitative_evaluation.png)
-
-For each metric, state whether lower, higher or zero is preferred, and whether
-it is a hard gate or a performance objective. Reject unsafe candidates before
-combining performance values into a score.
-
-## Compare complete designs
-
-Run the prepared design comparison:
-
-```bat
-python courses\day_3\demos\lesson2_design_tradeoff.py --no-show
-```
-
-![Matched weak-braking comparison for three complete designs](images/lesson2_design_tradeoff.png)
-
-The comparison uses one unchanged configuration over a suite containing:
-
-- nominal traffic;
-- a lateral displacement;
-- pose and range noise;
-- sensor delay;
-- steering bias and reduced authority;
-- reduced braking.
-
-Before reading the table, predict which of these changes should mainly affect:
-
-1. minimum gap;
-2. maximum path error;
-3. RMS jerk;
-4. completion time.
-
-## Explain the interacting parameters
-
-| Parameter | Primary effect | Important secondary effect |
-|---|---|---|
-| `global_speed_limit` | progress and speed | stopping distance, curve demand |
-| `maximum_lateral_acceleration` | curve-speed target | comfort and path error |
-| `curve_preview_distance` | when curve braking begins | progress, speed RMSE |
-| `base_lookahead` | low-speed path response | disturbance recovery |
-| `speed_lookahead_gain` | high-speed steering smoothness | corner cutting |
-| `time_headway` | desired traffic gap | progress and braking frequency |
-| `standstill_gap` | low-speed spacing | stop-and-go availability |
-| `emergency_ttc` | emergency-state entry | harsh braking and false triggers |
-| PI gains | speed response | overshoot, jerk and saturation |
-| `maximum_jerk` | command smoothness | stopping margin and tracking lag |
-
-Changing several values at once may improve the final score but destroys the
-causal evidence. Use one-factor experiments first, then test interactions.
-
-## Change one complete candidate
+## Desired following distance
 
 Open:
 
 ```text
-courses\day_3\student\integrated_design_study.py
+day_3\student\exercise_acc_headway.py
 ```
 
-The script defines four candidates:
+Find:
 
-- balanced reference;
-- high-speed/short-headway candidate;
-- conservative candidate;
-- a team candidate.
+```python
+TIME_HEADWAY_CANDIDATES_S = (0.7, 1.5, 2.2)
+STANDSTILL_GAP_M = 5.0
+```
+
+Before running, calculate $d_{\mathrm{des}}$ at $v=12\ \mathrm{m/s}$:
+
+$$
+d_{\mathrm{des}}=d_0+T_hv.
+$$
+
+| $T_h$ | Your calculated desired gap |
+|---:|---:|
+| 0.7 s | |
+| 1.5 s | |
+| 2.2 s | |
 
 Run:
 
 ```bat
-python courses\day_3\student\integrated_design_study.py --no-show
+python courses\day_3\student\exercise_acc_headway.py
 ```
 
-Record the suite-level result:
+The script compares the candidates in the same lead-vehicle scenario. Record:
 
-| Candidate | Passes | Worst case | Worst min gap | Mean path error | Decision |
-|---|---:|---|---:|---:|---|
-| Balanced | | | | | |
-| Aggressive | | | | | |
-| Conservative | | | | | |
-| Team | | | | | |
+| $T_h$ | Minimum gap | Minimum finite TTC | Collision samples | Completion | Decision |
+|---:|---:|---:|---:|---:|---|
+| 0.7 s | | | | | |
+| 1.5 s | | | | | |
+| 2.2 s | | | | | |
 
-The decision column must be **reject**, **retain for investigation** or
-**preferred**, with one metric-based reason.
+Do not choose the setting that merely completes the greatest distance. First
+reject collision or unacceptably small safety margins.
 
-## One-factor study and one interaction
+??? success "Calculation check"
+    At 12 m/s with a 5 m standstill gap:
 
-Choose exactly one parameter family:
+    $$
+    d_{\mathrm{des}}(0.7)=5+0.7(12)=13.4\ \mathrm m,
+    $$
 
-=== "Traffic margin"
+    $$
+    d_{\mathrm{des}}(1.5)=5+1.5(12)=23.0\ \mathrm m,
+    $$
 
-    Hold everything else fixed and compare:
+    $$
+    d_{\mathrm{des}}(2.2)=5+2.2(12)=31.4\ \mathrm m.
+    $$
 
-    ```python
-    time_headway = 1.0, 1.5, 2.0
-    ```
+## Compare complete headway responses
 
-    Predict the effect on minimum gap, braking activity and progress.
+Run the prepared demonstration:
 
-=== "Lateral preview"
+```bat
+python courses\day_3\demos\lesson4_acc_headway.py
+```
 
-    Hold everything else fixed and compare:
+The lead vehicle:
 
-    ```python
-    base_lookahead = 2.0, 3.0, 5.0
-    ```
+1. begins at a steady speed;
+2. slows;
+3. stops;
+4. waits;
+5. accelerates again.
 
-    Predict the effect on mean path error, maximum path error and steering
-    activity after the lateral push.
+Inspect:
 
-=== "Curve planning"
+- ego and lead speeds;
+- selected speed target;
+- actual and desired gap;
+- TTC during closing;
+- collision markers;
+- completion distance.
 
-    Hold everything else fixed and compare:
+Answer:
 
-    ```python
-    maximum_lateral_acceleration = 1.8, 2.5, 3.5
-    ```
+1. Which controller begins reducing speed earliest?
+2. Which follows most closely?
+3. Which produces the largest minimum gap?
+4. Does the longest headway always provide the best completion?
+5. Which two metrics should be reported together?
 
-    Predict the effect on actual peak lateral acceleration, path error and
-    completion time.
+Now replace only one candidate in
+`TIME_HEADWAY_CANDIDATES_S`. Rerun and decide whether the new value improves
+the trade-off.
 
-For each run, write the prediction before running the script:
+## Behaviour-state transitions
 
-| Change | Predicted metric direction | Measured change | Explanation |
-|---|---|---|---|
-| | | | |
+Run:
 
-### Test an interaction, not another isolated parameter
+```bat
+python courses\day_3\demos\lesson5_behaviour_states.py
+```
 
-Select one pair:
+The terminal prints state transitions. Match the printed times to the plot.
 
-1. speed limit × time headway;
-2. speed limit × look-ahead gain;
-3. maximum lateral acceleration × curve preview;
-4. PI gain × jerk limit.
+Record:
 
-Run a $2\times2$ experiment. If the effect of parameter A changes when
-parameter B changes, the parameters interact.
+| Transition | Time | Gap | TTC | Why did it occur? |
+|---|---:|---:|---:|---|
+| Cruise → Follow | | | | |
+| Follow → Brake | | | | |
+| Brake → Emergency, if present | | | | |
+| Brake/Follow → Cruise | | | | |
 
-Example layout:
+Open the demonstration and find:
 
-| | Low B | High B |
-|---|---:|---:|
-| Low A | metric | metric |
-| High A | metric | metric |
+```python
+EMERGENCY_TTC_S = 1.25
+BRAKE_ENTRY_RATIO = 0.78
+```
 
-Calculate the effect of A in each row. Equal effects suggest weak interaction;
-very different effects show that tuning the two loops independently is unsafe.
+Predict:
 
-## Safety gate and Pareto decision
+- lowering `EMERGENCY_TTC_S` makes Emergency earlier or later?
+- increasing `BRAKE_ENTRY_RATIO` makes Brake earlier or later?
 
-After rejecting unsafe candidates, compare the survivors in two objectives:
+Change only one parameter and rerun.
 
-- efficiency: completion time or progress;
-- quality: path error, gap margin or RMS jerk.
+??? success "Expected direction"
+    Lowering the emergency TTC threshold delays the Emergency transition.
+    Increasing the brake-entry ratio usually activates Brake at a larger gap
+    relative to the desired distance, so it tends to occur earlier.
 
-A candidate is **dominated** if another candidate is no worse in every chosen
-objective and strictly better in at least one. Do not collapse the objectives
-into a weighted score until you have inspected the non-dominated set.
+## Integrated preview
 
-### Team decision
+Run:
 
-Select one configuration for the next block and state:
+```bat
+python courses\day_3\demos\lesson6_workshop_preview.py
+```
+
+This demonstration combines:
+
+- the speed controller from Day 1;
+- Pure Pursuit from Day 2;
+- traffic target selection;
+- curve-aware speed constraints;
+- state supervision.
+
+For one time instant, identify:
+
+| Quantity | Value |
+|---|---:|
+| Driver/global target | |
+| Road target | |
+| Traffic target | |
+| Selected target | |
+| Ego speed | |
+| Lead speed | |
+| Behaviour state | |
+
+Check:
+
+$$
+v_{\mathrm{selected}}
+=\min(v_{\mathrm{road}},v_{\mathrm{traffic}}).
+$$
+
+## Engineering conclusion
+
+Complete:
 
 ```text
-Configuration selected:
-Safety gates passed:
-Metric deliberately improved:
-Metric deliberately sacrificed:
-Evidence that the trade-off is acceptable:
+Increasing time headway changed __________.
+Gap and TTC are both needed because __________.
+The most useful plotted evidence was __________.
+One setting that appeared efficient but unsafe was __________.
+The deterministic scenario cannot represent __________.
 ```
 
-## Continue if time remains — Perturb the selected design
+Keep your table. You will use the same quantities in the numerical and
+simulator lessons.
 
-Without retuning, test the chosen configuration against one new condition:
+## Troubleshooting
 
-- increase sensor delay by 50 ms;
-- reduce braking efficiency by a further 10 percentage points;
-- change the random seed;
-- increase initial lateral offset by 0.3 m.
+### A graph window does not appear
 
-This is a sensitivity check, not a second tuning set. Report whether the
-selection is robust, fragile or inconclusive.
+Confirm the packages are installed:
 
-## Fast-team investigation
+```bat
+python -m pip install -r requirements.txt
+```
 
-Extend the candidate table to at least 12 configurations. Filter by safety,
-construct a two-objective Pareto front and explain why the “best” point changes
-when the chosen objectives change. Keep the practice suite fixed throughout;
-do not tune on the evaluation suite.
+Run the command from the package root, not from inside `day_3\demos`.
+
+### A script finishes but you cannot find its figure
+
+The scripts may save images in the current working directory. Check:
+
+```bat
+dir *.png
+```
+
+### Results change after several edits
+
+Restore the supplied constants, then change one value at a time. A useful
+experiment must keep all other conditions fixed.
+
+## Fast-finisher extension
+
+Create one additional headway candidate between 1.0 and 2.0 s. Write a
+three-sentence engineering argument:
+
+1. one safety metric;
+2. one efficiency or completion metric;
+3. one comfort or control-effort observation.

@@ -1,194 +1,260 @@
-# Lesson 4 — Guided simulator and fault-testing exercises
+# Lesson 4 — Guided PyQt simulator exercises
 
-- **Format:** One PyQt simulator, controlled fault injection and a short batch
-  campaign
-- **Main outcome:** Diagnose how ACC, curve-speed planning, lateral control and
-  faults interact without changing several mechanisms at once
+- **Format:** Guided visual laboratory
+- **Simulator:** `day_3\gui\day3_vehicle_simulator.py`
+- **Main outcome:** Select and justify ACC spacing and safety parameters using
+  repeatable evidence
 
-The former Day 3 GUI and Day 4 robustness GUI are combined in this lesson. You
-first establish the integrated nominal behaviour, then inject faults in the
-same model and finish with a repeatable batch test.
+The PyQt simulator gives you direct control over:
 
-![Integrated robustness laboratory](images/day4_3d_robustness_preview.png)
+- driver/global speed;
+- curve-aware road speed;
+- lead-vehicle scenario;
+- standstill gap;
+- time headway;
+- emergency TTC and gap;
+- continuous ACC and behaviour-state supervision.
 
-## Start the single guided laboratory
+For every run:
 
-Run from the repository root:
+1. choose or reset a preset;
+2. predict the result;
+3. change only one parameter;
+4. apply and reset;
+5. run the complete scenario;
+6. record metrics and explain the change.
 
-```bat
-python courses\day_3\gui\day3_robustness_lab.py
-```
+## Start and identify the system
 
-The simulator exposes five groups of variables:
-
-| Group | Examples | Main evidence |
-|---|---|---|
-| Road and planning | path, speed request, curve preview | active speed constraint |
-| Lateral control | base look-ahead, speed gain | path error and steering activity |
-| ACC | time headway, standstill gap, TTC threshold | true gap and behaviour state |
-| Sensing and actuation | noise, delay, steering authority, brake efficiency | measured/true disagreement and margins |
-| Evaluation | seed, collision, maximum error, completion | pass/fail decision |
-
-Use **Apply and reset scenario** after every change. Keep a prediction log:
-
-| Run | Changed variable | Prediction | Minimum gap | Maximum path error | Collision/road departure | Conclusion |
-|---:|---|---|---:|---:|---|---|
-| 0 | none | reference | | | | |
-| 1 | | | | | | |
-| 2 | | | | | | |
-| 3 | | | | | | |
-| 4 | | | | | | |
-
-## Establish the integrated nominal reference
-
-Select **Lesson 4 — nominal reference**, apply and run. Trace this causal path:
-
-```mermaid
-flowchart LR
-    A["Road and lead vehicle"] --> B["Curve and ACC targets"]
-    B --> C["Lowest valid target"]
-    C --> D["PI throttle/brake"]
-    A --> E["Pure Pursuit steering"]
-    D --> F["Vehicle and metrics"]
-    E --> F
-```
-
-Pause once while the ego vehicle is curve-limited and once while it is
-traffic-limited. At each pause, record:
-
-- cruise, curve and ACC targets;
-- selected target and behaviour state;
-- actual and desired gap;
-- path error;
-- throttle, brake and steering commands.
-
-Explain why the selected target can change before either feedback error becomes
-large.
-
-## Reproduce the nominal ACC trade-off
-
-Starting from the nominal preset, compare time headways of 0.8 s, 1.5 s and
-2.2 s. Keep the path, lead schedule, seed and all other settings unchanged.
-
-Before running, calculate the desired gaps at $v=14\ \mathrm{m/s}$ for
-$d_0=5\ \mathrm m$:
-
-$$
-d_{\mathrm{des}}=d_0+T_hv.
-$$
-
-Do not select the best value from gap alone. Record braking frequency,
-completion/progress and whether the controller changes between `FOLLOW`,
-`BRAKE` and `EMERGENCY`. State the performance cost that buys the additional
-gap margin.
-
-## Inject sensor and actuator delay
-
-Select **Lesson 4 — sensor and actuator delay**. Run it unchanged, then repeat
-the nominal preset with the same seed.
-
-Answer from the traces:
-
-1. Which measured signal visibly lags its true value?
-2. Does the smallest gap occur before or after the largest closing speed?
-3. Which command begins too late?
-4. Is the first failed metric longitudinal, lateral or comfort-related?
-5. Which one parameter would you test first, and what side effect do you
-   predict?
-
-Change only the chosen parameter and rerun both nominal and delay cases.
-Reducing the global speed is allowed only if you can explain why a more local
-change is insufficient.
-
-## Test reduced braking authority
-
-Select **Lesson 4 — weak braking**. Before pressing Run, estimate whether the
-available gap is physically plausible using
-
-$$
-d_{\mathrm{req}}
-=v\tau+\frac{v^2}{2\eta_Ba_E}
--\frac{v_L^2}{2a_L}+d_0.
-$$
-
-The equation is a screening calculation, not a proof. Compare its predicted
-trend with the simulator's minimum true gap. Then vary braking efficiency by
-one step while holding the random seed and controller fixed.
-
-Record whether the controller:
-
-- detects the danger earlier;
-- requests braking earlier;
-- merely saturates for longer;
-- still violates the minimum-gap gate.
-
-Explain why increasing PI gain cannot restore missing physical brake authority.
-
-## Isolate lateral and combined faults
-
-Run **Lesson 4 — lateral push** and **Lesson 4 — combined disturbance**.
-
-For each run identify the first abnormal signal, the first controller response
-and the first metric that approaches a gate. Complete:
-
-| Scenario | First abnormal signal | Controller response | Limiting metric | Likely mechanism |
-|---|---|---|---|---|
-| Lateral push | | | | |
-| Combined | | | | |
-
-The combined run is not diagnosed by naming every injected fault. Identify the
-fault that actually determines the pass/fail result and support that claim with
-event order or metric evidence.
-
-## Convert the manual experiment into a batch campaign
-
-Close the GUI and run the same controller from fixed initial conditions and
-seeds:
+From the Day 3 package root:
 
 ```bat
-python courses\day_3\student\exercise_batch_testing.py --no-show
-python courses\day_3\student\challenge_practice.py --no-show
+python courses\day_3\gui\day3_vehicle_simulator.py
 ```
 
-The practice campaign contains nominal, lateral-push, sensor-noise,
-sensor-delay, steering-degradation and weak-braking cases. For the worst failed
-case, complete this diagnosis before editing anything:
-
-| Evidence | Entry |
-|---|---|
-| Failed gate | |
-| Time/location of worst event | |
-| Most likely mechanism | |
-| Parameter to change | |
-| Predicted benefit | |
-| Possible side effect | |
-| Other cases that must be rerun | |
-
-Change no more than two related parameters, then rerun all six cases.
-
-## State an evidence-bounded conclusion
-
-Submit the simulator worksheet and the generated practice CSV. Complete:
+Select:
 
 ```text
-The nominal controller __________.
-The most damaging isolated fault was __________ according to __________.
-The combined case failed/passed because __________ occurred before __________.
-Changing __________ improved __________ but cost __________.
-The unchanged controller passed ___/6 practice cases.
-This supports a claim inside __________; it does not establish __________.
+Lesson 4 — balanced ACC
 ```
 
-## Fast-team investigation — find a two-parameter failure boundary
+Find:
 
-Choose one coupled pair:
+- ego and lead vehicles;
+- road, traffic and selected targets;
+- actual and desired gap;
+- TTC;
+- Cruise, Follow, Brake and Emergency state;
+- speed, gap, acceleration and cross-track plots;
+- completion and safety metrics.
 
-- sensor delay × time headway;
-- brake efficiency × speed request;
-- steering authority × look-ahead gain;
-- lateral-push magnitude × speed request.
+Answer:
 
-Evaluate at least a $3\times3$ grid with the controller otherwise frozen. Mark
-each cell `PASS`, `FAIL-GAP`, `FAIL-LANE` or `FAIL-PROGRESS`. Select a point
-inside a stable passing region rather than the fastest point on the observed
-boundary, then test it with one unseen seed without retuning.
+1. Which colour represents the ego vehicle?
+2. Where can you see the selected target?
+3. Which trace shows the desired gap?
+4. Which metric would reveal a collision?
+
+## Establish a no-traffic reference
+
+Select:
+
+```text
+Lesson 1 — integrated baseline
+```
+
+This preset disables traffic. Run it and record:
+
+| Quantity | No-traffic result |
+|---|---:|
+| Requested speed | |
+| Minimum gap | not applicable |
+| Peak longitudinal acceleration | |
+| Peak lateral acceleration | |
+| Path completion | |
+| Road departure | |
+
+The purpose is not to tune anything. Observe how the vehicle behaves when only
+the speed and path controllers are active.
+
+Before continuing, predict what will happen if the same controller encounters
+a stopped lead vehicle without ACC.
+
+## Short versus balanced headway
+
+Compare these presets:
+
+```text
+Lesson 4 — short-headway ACC
+Lesson 4 — balanced ACC
+```
+
+Run each from reset. Record:
+
+| Metric | Short headway | Balanced headway |
+|---|---:|---:|
+| Time headway | | |
+| Standstill gap | | |
+| Minimum gap | | |
+| Minimum finite TTC | | |
+| Collision samples | | |
+| Completion | | |
+| Peak deceleration | | |
+| State transitions | | |
+
+Answer:
+
+1. Which starts responding to the lead vehicle earlier?
+2. Which maintains more space during the stop?
+3. Does the safer-looking run complete less distance?
+4. Is the short-headway setting acceptable merely because no collision occurs
+   in one run?
+
+Notice: The short-headway preset is deliberately aggressive. Treat an unsafe result as evidence, not as a failed software installation.
+
+## Tune time headway systematically
+
+Return to:
+
+```text
+Lesson 4 — balanced ACC
+```
+
+Keep:
+
+- the same lead scenario;
+- the same standstill gap;
+- the same road and path settings;
+- the same emergency thresholds.
+
+Test:
+
+$$
+T_h\in\{1.0,\ 1.5,\ 2.0\}\ \mathrm s.
+$$
+
+Press **Apply and reset scenario** after every change.
+
+Before running, calculate the desired gap at $v=12\ \mathrm{m/s}$ for each
+candidate.
+
+| $T_h$ | Calculated $d_{\mathrm{des}}$ at 12 m/s | Minimum gap | Minimum TTC | Completion | Peak deceleration | Decision |
+|---:|---:|---:|---:|---:|---:|---|
+| 1.0 s | | | | | | |
+| 1.5 s | | | | | | |
+| 2.0 s | | | | | | |
+
+Selection order:
+
+1. reject collision;
+2. reject unacceptably small gap or TTC;
+3. compare deceleration and state changes;
+4. compare completion among the remaining candidates.
+
+Do not select a controller using only completion.
+
+??? success "Desired-gap check"
+    With $d_0=5\ \mathrm m$ and $v=12\ \mathrm{m/s}$:
+
+    | $T_h$ | $d_{\mathrm{des}}$ |
+    |---:|---:|
+    | 1.0 s | 17 m |
+    | 1.5 s | 23 m |
+    | 2.0 s | 29 m |
+
+## Investigate standstill gap
+
+Keep your chosen time headway. Compare:
+
+$$
+d_0\in\{3,\ 5,\ 8\}\ \mathrm m.
+$$
+
+Focus on the period when the lead vehicle is stopped.
+
+| $d_0$ | Gap while stopped | Selected target | State | Restart behaviour |
+|---:|---:|---:|---|---|
+| 3 m | | | | |
+| 5 m | | | | |
+| 8 m | | | | |
+
+Explain:
+
+- why changing $d_0$ shifts the desired-gap curve at every speed;
+- why $d_0$ matters most at low speed and standstill;
+- why a larger $d_0$ can reduce road capacity.
+
+## Safety-state thresholds
+
+Select:
+
+```text
+Lesson 5 — late-braking states
+```
+
+Record the baseline times at which Brake and Emergency activate.
+
+Then change only the emergency TTC:
+
+| Emergency TTC | Brake time | Emergency time | Minimum gap | Collision | Interpretation |
+|---:|---:|---:|---:|---:|---|
+| 0.8 s | | | | | |
+| 1.25 s | | | | | |
+| 2.0 s | | | | | |
+
+Predict before applying:
+
+- a larger TTC threshold should activate Emergency earlier;
+- earlier intervention may increase minimum gap;
+- an excessively large threshold may cause unnecessary harsh braking.
+
+The threshold is not a universal safety constant. It is meaningful only with
+the assumed delays, braking capability and sensor behaviour.
+
+## Checkpoint
+
+Complete:
+
+```text
+Selected time headway:
+Selected standstill gap:
+Minimum gap:
+Minimum finite TTC:
+Collision samples:
+Completion:
+One safety benefit:
+One efficiency or comfort cost:
+One simulator limitation:
+```
+
+## Troubleshooting
+
+### The Apply button appears to do nothing
+
+Change the value, then select **Apply and reset scenario**. The experiment must
+restart for a fair comparison.
+
+### The vehicle stops early
+
+Check the selected lead scenario and whether traffic is enabled. In
+stop-and-go traffic, stopping can be correct controller behaviour.
+
+### The selected target is lower than both the cruise setting and lead speed
+
+The ego vehicle may be closing too quickly or the gap may be below the desired
+value. The closing-speed correction can make the temporary target lower than
+lead speed.
+
+### Many settings changed at once
+
+Reload a named preset. Repeat the experiment while changing one value only.
+
+## Fast-finisher extension
+
+Find two configurations that are not clearly better than each other:
+
+- one with a larger safety margin but lower completion;
+- one with higher completion but smaller safety margin.
+
+Explain why this is a multi-objective design problem rather than a single
+parameter-optimization exercise.
