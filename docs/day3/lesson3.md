@@ -306,7 +306,7 @@ Find a pair $(d,v-v_L)$ that gives TTC $=5$ s. Then find a different pair with
 the same TTC. Explain why equal TTC does not imply equal desired gap, required
 braking or comfort.
 
-# Block 3 — Advanced worked examples
+# Advanced worked examples
 
 
 - **Main outcome:** Analyse the complete controller at a difficult operating
