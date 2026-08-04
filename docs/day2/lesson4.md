@@ -138,7 +138,7 @@ Before running, rank them from:
 
 Run each case to completion and record:
 
-| $L_d$ | Mean $|e_y|$ | Max $|e_y|$ | Outside road | Steering-rate RMS | Completion | Decision |
+| $L_d$ | Mean $\|e_y\|$ | Max $\|e_y\|$ | Outside road | Steering-rate RMS | Completion | Decision |
 |---:|---:|---:|---:|---:|---:|---|
 | 2 m | | | | | | |
 | 5 m | | | | | | |
@@ -184,7 +184,7 @@ $$
 
 Apply the same disturbance at the same time.
 
-| Case | Actual $L_d$ | Max $|e_y|$ | Recovery time | Steering-rate RMS | Outside road |
+| Case | Actual $L_d$ | Max $\|e_y\|$ | Recovery time | Steering-rate RMS | Outside road |
 |---|---:|---:|---:|---:|---:|
 | Fixed | | | | | |
 | Adaptive | | | | | |
@@ -217,7 +217,7 @@ Each pair reports one result supported by two different metrics.
 From the package root:
 
 ```bat
-py -3.12 -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### The settings appear unchanged

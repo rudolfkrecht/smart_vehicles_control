@@ -205,7 +205,7 @@ Change the filename for each configuration.
 
 Record:
 
-| Base $L_d$ | Max $|e_y|$ | Mean $|e_y|$ | Outside road | Steering-rate RMS | Peak $a_y$ | Decision |
+| Base $L_d$ | Max $\|e_y\|$ | Mean $\|e_y\|$ | Outside road | Steering-rate RMS | Peak $a_y$ | Decision |
 |---:|---:|---:|---:|---:|---:|---|
 | 4 m | | | | | | |
 | 6 m | | | | | | |

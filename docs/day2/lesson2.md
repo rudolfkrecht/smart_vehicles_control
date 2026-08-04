@@ -88,7 +88,7 @@ Record:
 
 | Changed factor | Effect on radius | Effect on yaw rate | Effect on $a_y$ |
 |---|---|---|---|
-| Larger $|\delta|$ | | | |
+| Larger $\|\delta\|$ | | | |
 | Larger $L$ | | | |
 | Larger $v$ | | | |
 
@@ -162,7 +162,7 @@ same path, from the same initial condition and at the same speed.
 
 Complete:
 
-| Look-ahead | Mean $|e_y|$ | Maximum $|e_y|$ | Steering-rate RMS | Road departure | Interpretation |
+| Look-ahead | Mean $\|e_y\|$ | Maximum $\|e_y\|$ | Steering-rate RMS | Road departure | Interpretation |
 |---:|---:|---:|---:|---:|---|
 | Short | | | | | |
 | Balanced | | | | | |

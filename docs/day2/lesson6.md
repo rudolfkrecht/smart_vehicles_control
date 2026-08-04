@@ -88,8 +88,8 @@ Copy the printed metrics:
 | Metric | Fixed baseline |
 |---|---:|
 | Lap progress | |
-| Maximum $|e_y|$ | |
-| Mean $|e_y|$ | |
+| Maximum $\|e_y\|$ | |
+| Mean $\|e_y\|$ | |
 | Outside road | |
 | Steering-rate RMS | |
 | Peak $a_y$ | |
@@ -145,7 +145,7 @@ python run_simulator.py --headless --controller student --duration 75 --target-s
 
 Use a new filename for each run.
 
-| $L_{d,0}$ | $K_v$ | $L_d$ at 12 m/s | Max $|e_y|$ | Steering-rate RMS | Peak $a_y$ | Lap progress | Decision |
+| $L_{d,0}$ | $K_v$ | $L_d$ at 12 m/s | Max $\|e_y\|$ | Steering-rate RMS | Peak $a_y$ | Lap progress | Decision |
 |---:|---:|---:|---:|---:|---:|---:|---|
 | | | | | | | | |
 | | | | | | | | |
@@ -177,7 +177,7 @@ These are sensitivity tests; they do not use the full-lap acceptance criteria.
 
 Record:
 
-| Speed | Look-ahead | Max $|e_y|$ | Steering-rate RMS | Peak $a_y$ | Interpretation |
+| Speed | Look-ahead | Max $\|e_y\|$ | Steering-rate RMS | Peak $a_y$ | Interpretation |
 |---:|---:|---:|---:|---:|---|
 | 8 m/s | | | | | |
 | 16 m/s | | | | | |

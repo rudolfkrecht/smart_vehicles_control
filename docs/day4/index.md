@@ -14,7 +14,7 @@ the vehicle to repeatable sensor, actuator and lateral disturbances, evaluate
 the result with quantitative metrics, and produce a final multi-scenario
 evidence package.
 
-![Day 4 cumulative 3D-like simulator](../images/day4_3d_robustness_preview.png)
+![Day 4 cumulative 3D-like simulator](images/day4_3d_robustness_preview.png)
 
 ## Day plan
 
@@ -57,8 +57,8 @@ You should be able to:
 Open Command Prompt in the extracted Day 4 package:
 
 ```bat
-py -3.12 -m pip install -r requirements.txt
-py -3.12 setup_check.py
+python -m pip install -r requirements.txt
+python setup_check.py
 ```
 
 The final line should be:

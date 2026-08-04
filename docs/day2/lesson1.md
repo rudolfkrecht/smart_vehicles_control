@@ -251,8 +251,8 @@ You will use several metrics:
 
 | Metric | Question answered |
 |---|---|
-| Mean $|e_y|$ | How accurate was ordinary tracking? |
-| Maximum $|e_y|$ | What was the worst deviation? |
+| Mean $\|e_y\|$ | How accurate was ordinary tracking? |
+| Maximum $\|e_y\|$ | What was the worst deviation? |
 | Outside-road percentage | Did a safety boundary fail? |
 | Steering-rate RMS | How active or oscillatory was steering? |
 | Peak $a_y$ | How demanding was the curve dynamically? |

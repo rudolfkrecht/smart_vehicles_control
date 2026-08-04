@@ -175,7 +175,7 @@ For $K_P=0.08,\ 0.35,\ 1.20$, predict:
 ### Run the gain comparison
 
 ```bash
-python courses\day_1\demos\esson4_p_control.py
+python courses\day_1\demos\lesson4_p_control.py
 ```
 
 ![Effect of proportional gain](images/lesson4_p_control.png)

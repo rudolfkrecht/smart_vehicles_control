@@ -55,7 +55,7 @@ Before viewing the result, predict:
 
 Record:
 
-| Case | Mean $|e_y|$ | Maximum $|e_y|$ | Speed RMSE | Minimum gap | Pass/fail |
+| Case | Mean $\|e_y\|$ | Maximum $\|e_y\|$ | Speed RMSE | Minimum gap | Pass/fail |
 |---|---:|---:|---:|---:|---|
 | Nominal | | | | | |
 | Disturbed | | | | | |
