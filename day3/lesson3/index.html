@@ -1,0 +1,2663 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hands-on control engineering course for the Smart Vehicles Summer School 2026">
+      
+      
+        <meta name="author" content="Rudolf Krecht">
+      
+      
+        <link rel="canonical" href="https://rudolfkrecht.github.io/smart_vehicles_control/day3/lesson3/">
+      
+      
+        <link rel="prev" href="../lesson2/">
+      
+      
+        <link rel="next" href="../lesson4/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>3. Numerical examples - Control of Self-Driving Vehicles</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lesson-3-numerical-engineering-exercises" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-header__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Control of Self-Driving Vehicles
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Numerical examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day1/" class="md-tabs__link">
+          
+  
+  
+  Day 1 — Longitudinal Control
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day2/" class="md-tabs__link">
+          
+  
+  
+  Day 2 — Path Following
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Day 3 — Integrated ADAS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day4/" class="md-tabs__link">
+          
+  
+  
+  Day 4 — Testing and Robustness
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../resources/python-reference/" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../submission/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Project submission
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-nav__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Control of Self-Driving Vehicles
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Course overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Four-day schedule
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 1 — Longitudinal Control
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1 — Longitudinal Control
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Longitudinal control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 2 — Path Following
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2 — Path Following
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Lateral control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 3 — Integrated ADAS
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3 — Integrated ADAS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data sheet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-desired-following-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: desired following distance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-closing-speed-and-ttc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: closing speed and TTC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-acc-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: ACC target
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-target-arbitration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: target arbitration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-pi-and-actuator-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: PI and actuator split
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-emergency-braking-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: emergency braking margin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional challenge
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. ADAS in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project workshop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 4 — Testing and Robustness
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4 — Testing and Robustness
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Robustness verification in simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/python-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/formula-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formula sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project submission
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data sheet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-desired-following-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: desired following distance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-closing-speed-and-ttc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: closing speed and TTC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-acc-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: ACC target
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-target-arbitration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: target arbitration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-pi-and-actuator-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: PI and actuator split
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-emergency-braking-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: emergency braking margin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional challenge
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lesson-3-numerical-engineering-exercises">Lesson 3 — Numerical engineering exercises</h1>
+<ul>
+<li><strong>Format:</strong> Individual calculations followed by comparison</li>
+<li><strong>Main outcome:</strong> Calculate the signals and commands used by the Day 3 ACC
+  controller</li>
+</ul>
+<p>Use SI units throughout. Show the equation, substitute values with units and
+state what the result means physically.</p>
+<h2 id="data-sheet">Data sheet</h2>
+<p>Unless an exercise changes a value, use:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cruise target <span class="arithmatex">\(v_{\mathrm{cruise}}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(15\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Standstill gap <span class="arithmatex">\(d_0\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(5\ \mathrm m\)</span></td>
+</tr>
+<tr>
+<td>Time headway <span class="arithmatex">\(T_h\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(1.5\ \mathrm s\)</span></td>
+</tr>
+<tr>
+<td>Gap gain <span class="arithmatex">\(K_d\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.20\ \mathrm{s^{-1}}\)</span></td>
+</tr>
+<tr>
+<td>Closing-speed gain <span class="arithmatex">\(K_{\Delta v}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.50\)</span></td>
+</tr>
+<tr>
+<td>PI proportional gain <span class="arithmatex">\(K_P\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.15\ \mathrm{s/m}\)</span></td>
+</tr>
+<tr>
+<td>PI integral gain <span class="arithmatex">\(K_I\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.005\ \mathrm{1/m}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The normalized PI output is positive for throttle and negative for brake.</p>
+<h2 id="exercise-1-desired-following-distance">Exercise 1: desired following distance</h2>
+<p>Calculate the desired gap at:</p>
+<ol>
+<li><span class="arithmatex">\(v=0\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v=5\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v=10\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v=15\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v=20\ \mathrm{m/s}\)</span>.</li>
+</ol>
+<p>Use:</p>
+<div class="arithmatex">\[
+d_{\mathrm{des}}=d_0+T_hv.
+\]</div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Ego speed</th>
+<th style="text-align: right;">Desired gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0 m/s</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">5 m/s</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">10 m/s</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">15 m/s</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">20 m/s</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Then explain why <span class="arithmatex">\(T_h\)</span> has units of seconds.</p>
+<details class="success">
+<summary>Worked solution</summary>
+<div class="arithmatex">\[
+d_{\mathrm{des}}=5+1.5v.
+\]</div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Ego speed</th>
+<th style="text-align: right;">Desired gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0 m/s</td>
+<td style="text-align: right;">5.0 m</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 m/s</td>
+<td style="text-align: right;">12.5 m</td>
+</tr>
+<tr>
+<td style="text-align: right;">10 m/s</td>
+<td style="text-align: right;">20.0 m</td>
+</tr>
+<tr>
+<td style="text-align: right;">15 m/s</td>
+<td style="text-align: right;">27.5 m</td>
+</tr>
+<tr>
+<td style="text-align: right;">20 m/s</td>
+<td style="text-align: right;">35.0 m</td>
+</tr>
+</tbody>
+</table>
+<p>Since <span class="arithmatex">\(T_hv\)</span> must be a distance:</p>
+<div class="arithmatex">\[
+[T_h]=\frac{\mathrm m}{\mathrm{m/s}}=\mathrm s.
+\]</div>
+</details>
+<h2 id="exercise-2-closing-speed-and-ttc">Exercise 2: closing speed and TTC</h2>
+<p>For each case, calculate closing speed and TTC.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th style="text-align: right;">Gap <span class="arithmatex">\(d\)</span></th>
+<th style="text-align: right;">Ego <span class="arithmatex">\(v\)</span></th>
+<th style="text-align: right;">Lead <span class="arithmatex">\(v_L\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">30 m</td>
+<td style="text-align: right;">15 m/s</td>
+<td style="text-align: right;">10 m/s</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">30 m</td>
+<td style="text-align: right;">10 m/s</td>
+<td style="text-align: right;">10 m/s</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">18 m</td>
+<td style="text-align: right;">12 m/s</td>
+<td style="text-align: right;">9 m/s</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;">12 m</td>
+<td style="text-align: right;">8 m/s</td>
+<td style="text-align: right;">11 m/s</td>
+</tr>
+</tbody>
+</table>
+<p>Use:</p>
+<div class="arithmatex">\[
+v_{\mathrm{close}}=v-v_L,
+\]</div>
+<p>and, only when <span class="arithmatex">\(v_{\mathrm{close}}&gt;0\)</span>:</p>
+<div class="arithmatex">\[
+\mathrm{TTC}=\frac{d}{v_{\mathrm{close}}}.
+\]</div>
+<details class="success">
+<summary>Worked solution</summary>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th style="text-align: right;">Closing speed</th>
+<th style="text-align: right;">TTC</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;"><span class="arithmatex">\(5\ \mathrm{m/s}\)</span></td>
+<td style="text-align: right;">6.0 s</td>
+<td>Gap decreasing</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;"><span class="arithmatex">\(0\ \mathrm{m/s}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(\infty\)</span></td>
+<td>Constant gap</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;"><span class="arithmatex">\(3\ \mathrm{m/s}\)</span></td>
+<td style="text-align: right;">6.0 s</td>
+<td>Gap decreasing</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;"><span class="arithmatex">\(-3\ \mathrm{m/s}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(\infty\)</span></td>
+<td>Lead pulling away</td>
+</tr>
+</tbody>
+</table>
+<p>Cases A and C have the same TTC even though their gaps and closing speeds
+differ.</p>
+</details>
+<h2 id="exercise-3-acc-target">Exercise 3: ACC target</h2>
+<p>The ego vehicle has:</p>
+<ul>
+<li><span class="arithmatex">\(v=15\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v_L=10\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(d=28\ \mathrm m\)</span>.</li>
+</ul>
+<p>Calculate:</p>
+<ol>
+<li>desired gap;</li>
+<li>gap error <span class="arithmatex">\(d-d_{\mathrm{des}}\)</span>;</li>
+<li>closing speed;</li>
+<li>the unclipped ACC target;</li>
+<li>the selected target after clipping to <span class="arithmatex">\([0,15]\ \mathrm{m/s}\)</span>.</li>
+</ol>
+<p>Use:</p>
+<div class="arithmatex">\[
+v_{\mathrm{ACC}}
+=v_L+K_d(d-d_{\mathrm{des}})
+-K_{\Delta v}\max(v-v_L,0).
+\]</div>
+<p>Check the unit of the gap correction:</p>
+<div class="arithmatex">\[
+\mathrm{s^{-1}}\cdot\mathrm m=\mathrm{m/s}.
+\]</div>
+<details class="success">
+<summary>Worked solution</summary>
+<p>Desired gap:</p>
+<div class="arithmatex">\[
+d_{\mathrm{des}}=5+1.5(15)=27.5\ \mathrm m.
+\]</div>
+<p>Gap error:</p>
+<div class="arithmatex">\[
+28-27.5=0.5\ \mathrm m.
+\]</div>
+<p>Closing speed:</p>
+<div class="arithmatex">\[
+15-10=5\ \mathrm{m/s}.
+\]</div>
+<p>ACC target:</p>
+<div class="arithmatex">\[
+v_{\mathrm{ACC}}
+=10+0.20(0.5)-0.50(5)
+=7.6\ \mathrm{m/s}.
+\]</div>
+<p>The value is already inside the allowed range, so the selected target is
+<span class="arithmatex">\(7.6\ \mathrm{m/s}\)</span>. The target is below lead speed because the ego car is
+still closing rapidly.</p>
+</details>
+<h2 id="exercise-4-target-arbitration">Exercise 4: target arbitration</h2>
+<p>Select the minimum active target:</p>
+<div class="arithmatex">\[
+v_{\mathrm{selected}}
+=\min(v_{\mathrm{cruise}},v_{\mathrm{road}},v_{\mathrm{ACC}}).
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th style="text-align: right;">Cruise</th>
+<th style="text-align: right;">Road</th>
+<th style="text-align: right;">ACC</th>
+<th style="text-align: right;">Selected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>All speeds are in m/s.</p>
+<details class="success">
+<summary>Worked solution</summary>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th style="text-align: right;">Selected target</th>
+<th>Active constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">7.6 m/s</td>
+<td>Traffic</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">8 m/s</td>
+<td>Road</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">15 m/s</td>
+<td>All equal/inactive</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;">12 m/s</td>
+<td>Cruise setting</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="exercise-5-pi-and-actuator-split">Exercise 5: PI and actuator split</h2>
+<p>Continue Exercise 3. The ego speed is <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> and the selected
+target is <span class="arithmatex">\(7.6\ \mathrm{m/s}\)</span>. Assume the accumulated speed error is:</p>
+<div class="arithmatex">\[
+\int e_v\,dt=6\ \mathrm{m}.
+\]</div>
+<p>Calculate:</p>
+<ol>
+<li>speed error;</li>
+<li>raw PI output;</li>
+<li>saturated signed command;</li>
+<li>throttle and brake commands.</li>
+</ol>
+<p>Use:</p>
+<div class="arithmatex">\[
+u=K_Pe_v+K_I\int e_v\,dt.
+\]</div>
+<details class="success">
+<summary>Worked solution</summary>
+<p>Speed error:</p>
+<div class="arithmatex">\[
+e_v=7.6-15=-7.4\ \mathrm{m/s}.
+\]</div>
+<p>Raw command:</p>
+<div class="arithmatex">\[
+u=0.15(-7.4)+0.005(6)=-1.08.
+\]</div>
+<p>After saturation:</p>
+<div class="arithmatex">\[
+u_{\mathrm{sat}}=-1.
+\]</div>
+<p>Therefore:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>throttle = 0
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>brake = 1
+</code></pre></div>
+<p>The vehicle must never apply positive throttle and brake simultaneously.</p>
+</details>
+<h2 id="exercise-6-emergency-braking-margin">Exercise 6: emergency braking margin</h2>
+<p>A lead vehicle is stopped. The ego speed is <span class="arithmatex">\(12\ \mathrm{m/s}\)</span>. Assume the
+effective maximum deceleration is <span class="arithmatex">\(6\ \mathrm{m/s^2}\)</span> and ignore delay.</p>
+<p>Estimate ideal braking distance:</p>
+<div class="arithmatex">\[
+d_{\mathrm{brake}}=\frac{v^2}{2a}.
+\]</div>
+<p>Then add:</p>
+<ul>
+<li>0.5 s of sensing and actuation delay;</li>
+<li>a 3 m residual gap.</li>
+</ul>
+<p>Use:</p>
+<div class="arithmatex">\[
+d_{\mathrm{total}}
+=vT_{\mathrm{delay}}+\frac{v^2}{2a}+d_{\mathrm{residual}}.
+\]</div>
+<p>Compare the result with a 15 m measured gap.</p>
+<details class="success">
+<summary>Worked solution</summary>
+<p>Ideal braking distance:</p>
+<div class="arithmatex">\[
+d_{\mathrm{brake}}
+=\frac{12^2}{2(6)}
+=12\ \mathrm m.
+\]</div>
+<p>Delay distance:</p>
+<div class="arithmatex">\[
+12(0.5)=6\ \mathrm m.
+\]</div>
+<p>Total:</p>
+<div class="arithmatex">\[
+d_{\mathrm{total}}=6+12+3=21\ \mathrm m.
+\]</div>
+<p>A 15 m gap is insufficient under these assumptions. This shows why a
+fixed TTC or gap threshold cannot be selected without considering delay
+and braking capability.</p>
+</details>
+<h2 id="engineering-conclusion">Engineering conclusion</h2>
+<p>Complete:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>The desired gap at 15 m/s is __________.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>The ACC target depends on both gap error and __________.
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>The lowest of road and traffic targets is selected because __________.
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>The emergency-distance calculation is optimistic because it omits __________.
+</code></pre></div>
+<h2 id="additional-challenge">Additional challenge</h2>
+<p>Find a pair <span class="arithmatex">\((d,v-v_L)\)</span> that gives TTC <span class="arithmatex">\(=5\)</span> s. Then find a different pair with
+the same TTC. Explain why equal TTC does not imply equal desired gap, required
+braking or comfort.</p>
+<h1 id="advanced-worked-examples">Advanced worked examples</h1>
+<ul>
+<li><strong>Main outcome:</strong> Analyse the complete controller at a difficult operating
+  point and justify a design decision from more than one metric</li>
+</ul>
+<h2 id="reference-equations">Reference equations</h2>
+<div class="arithmatex">\[
+d_{\mathrm{des}}=d_0+T_hv
+\]</div>
+<div class="arithmatex">\[
+\mathrm{TTC}=\frac{d}{v-v_L}\qquad(v&gt;v_L)
+\]</div>
+<div class="arithmatex">\[
+v_{\mathrm{ACC}}=
+\operatorname{clip}\left[
+v_L+K_d(d-d_{\mathrm{des}})
+-K_{\Delta v}\max(v-v_L,0),0,v_{\mathrm{cruise}}
+\right]
+\]</div>
+<div class="arithmatex">\[
+v_{\mathrm{curve}}=
+\sqrt{\frac{a_{y,\max}}{\max(|\kappa|,\varepsilon)}}
+\]</div>
+<div class="arithmatex">\[
+v_{\mathrm{selected}}
+=\min(v_{\mathrm{cruise}},v_{\mathrm{curve}},v_{\mathrm{ACC}})
+\]</div>
+<h2 id="case-1-one-sample-three-constraints-and-a-saturated-pi-controller">Case 1 — One sample, three constraints and a saturated PI controller</h2>
+<p>At the current sample:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ego speed <span class="arithmatex">\(v\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(16.0\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Lead speed <span class="arithmatex">\(v_L\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(11.0\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Gap <span class="arithmatex">\(d\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(32.0\ \mathrm m\)</span></td>
+</tr>
+<tr>
+<td>Cruise request</td>
+<td style="text-align: right;"><span class="arithmatex">\(18.0\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Previewed curvature <span class="arithmatex">\(\|\kappa\|\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.0225\ \mathrm{m^{-1}}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(d_0\)</span>, <span class="arithmatex">\(T_h\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(5.0\ \mathrm m\)</span>, <span class="arithmatex">\(1.6\ \mathrm s\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(K_d\)</span>, <span class="arithmatex">\(K_{\Delta v}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0.22\ \mathrm{s^{-1}}\)</span>, <span class="arithmatex">\(0.65\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a_{y,\max}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(2.5\ \mathrm{m/s^2}\)</span></td>
+</tr>
+<tr>
+<td>PI gains</td>
+<td style="text-align: right;"><span class="arithmatex">\(K_P=0.15\)</span>, <span class="arithmatex">\(K_I=0.005\ \mathrm{s^{-1}}\)</span></td>
+</tr>
+<tr>
+<td>Previous integral</td>
+<td style="text-align: right;"><span class="arithmatex">\(I_{k-1}=12.0\ \mathrm{m}\)</span></td>
+</tr>
+<tr>
+<td>Sample time</td>
+<td style="text-align: right;"><span class="arithmatex">\(\Delta t=0.10\ \mathrm s\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Calculate:</p>
+<ol>
+<li>desired gap;</li>
+<li>closing speed and TTC;</li>
+<li>ACC target;</li>
+<li>curve-speed target;</li>
+<li>selected speed and active limiting constraint;</li>
+<li>tentative integral <span class="arithmatex">\(I_k\)</span>;</li>
+<li>raw and clipped signed PI command;</li>
+<li>expected behaviour state.</li>
+</ol>
+<p>Then answer: if the curve target were calculated from the current curvature
+rather than previewed curvature, which physical response could become late?</p>
+<details class="success">
+<summary>Case 1 — worked solution</summary>
+<p>Desired gap:</p>
+<div class="arithmatex">\[
+d_{\mathrm{des}}=5+1.6(16)=30.6\ \mathrm m.
+\]</div>
+<p>Closing speed and TTC:</p>
+<div class="arithmatex">\[
+v-v_L=5.0\ \mathrm{m/s},\qquad
+\mathrm{TTC}=\frac{32}{5}=6.4\ \mathrm s.
+\]</div>
+<p>ACC target:</p>
+<div class="arithmatex">\[
+v_{\mathrm{ACC}}
+=11+0.22(32-30.6)-0.65(5)
+=8.058\ \mathrm{m/s}.
+\]</div>
+<p>Curve target:</p>
+<div class="arithmatex">\[
+v_{\mathrm{curve}}
+=\sqrt{\frac{2.5}{0.0225}}
+=10.54\ \mathrm{m/s}.
+\]</div>
+<p>Therefore traffic is the active constraint and</p>
+<div class="arithmatex">\[
+v_{\mathrm{selected}}=8.058\ \mathrm{m/s}.
+\]</div>
+<p>The speed error is <span class="arithmatex">\(-7.942\ \mathrm{m/s}\)</span> and</p>
+<div class="arithmatex">\[
+I_k=12+(-7.942)(0.1)=11.206\ \mathrm m.
+\]</div>
+<div class="arithmatex">\[
+u_{\mathrm{raw}}
+=0.15(-7.942)+0.005(11.206)
+\approx-1.135.
+\]</div>
+<p>The normalized command clips to <span class="arithmatex">\(-1.0\)</span>, requesting full braking. The state
+should be <code>BRAKE</code> because the selected target is more than <span class="arithmatex">\(1\ \mathrm{m/s}\)</span>
+below the current speed, even though TTC is not yet critical. Without
+curvature preview, braking for the bend would begin later.</p>
+</details>
+<h2 id="case-2-is-collision-avoidance-physically-feasible-after-brake-fade">Case 2 — Is collision avoidance physically feasible after brake fade?</h2>
+<p>Do not start with the ACC target. First check whether the available distance is
+consistent with the assumed latency and braking authority.</p>
+<p>Assume:</p>
+<ul>
+<li><span class="arithmatex">\(v=18\ \mathrm{m/s}\)</span>;</li>
+<li><span class="arithmatex">\(v_L=10\ \mathrm{m/s}\)</span>;</li>
+<li>measured true gap <span class="arithmatex">\(d=42\ \mathrm m\)</span>;</li>
+<li>sensing + computation + actuation latency <span class="arithmatex">\(\tau=0.35\ \mathrm s\)</span>;</li>
+<li>nominal ego deceleration <span class="arithmatex">\(a_E=6.0\ \mathrm{m/s^2}\)</span>;</li>
+<li>braking efficiency <span class="arithmatex">\(\eta_B=0.60\)</span>;</li>
+<li>lead deceleration <span class="arithmatex">\(a_L=5.0\ \mathrm{m/s^2}\)</span>;</li>
+<li>final residual margin <span class="arithmatex">\(d_0=5\ \mathrm m\)</span>.</li>
+</ul>
+<p>Use the simplified worst-case requirement:</p>
+<div class="arithmatex">\[
+d_{\mathrm{req}}
+=v\tau
++\frac{v^2}{2\eta_Ba_E}
+-\frac{v_L^2}{2a_L}
++d_0.
+\]</div>
+<p>Tasks:</p>
+<ol>
+<li>calculate the effective ego deceleration;</li>
+<li>calculate latency distance and both braking distances;</li>
+<li>determine whether <span class="arithmatex">\(42\)</span> m is sufficient;</li>
+<li>solve the same expression for the maximum feasible ego speed;</li>
+<li>name three physical effects omitted by this check.</li>
+</ol>
+<details class="success">
+<summary>Case 2 — worked solution</summary>
+<p>Effective ego deceleration is</p>
+<div class="arithmatex">\[
+\eta_Ba_E=0.60(6.0)=3.6\ \mathrm{m/s^2}.
+\]</div>
+<p>The four distance terms are:</p>
+<div class="arithmatex">\[
+v\tau=6.3\ \mathrm m,
+\quad \frac{18^2}{2(3.6)}=45.0\ \mathrm m,
+\quad \frac{10^2}{2(5)}=10.0\ \mathrm m,
+\quad d_0=5.0\ \mathrm m.
+\]</div>
+<p>Thus</p>
+<div class="arithmatex">\[
+d_{\mathrm{req}}=6.3+45-10+5=46.3\ \mathrm m.
+\]</div>
+<p>The observed <span class="arithmatex">\(42\)</span> m gap is short by <span class="arithmatex">\(4.3\)</span> m under these assumptions.</p>
+<p>To find the maximum feasible speed, solve</p>
+<div class="arithmatex">\[
+42=0.35v+\frac{v^2}{7.2}-10+5.
+\]</div>
+<p>The positive root is approximately</p>
+<div class="arithmatex">\[
+v_{\max}=17.18\ \mathrm{m/s}.
+\]</div>
+<p>Omitted effects include braking build-up dynamics, slope, tire friction,
+aerodynamic/rolling forces, sensor error and variation in lead braking.</p>
+</details>
+<h2 id="case-3-trace-a-stateful-supervisor">Case 3 — Trace a stateful supervisor</h2>
+<p>The supervisor uses these priorities:</p>
+<ol>
+<li>invalid/stale range data overrides all normal modes with <code>SAFE_STOP</code>;</li>
+<li><code>EMERGENCY</code> if <span class="arithmatex">\(d\leq3.0\)</span> m or TTC <span class="arithmatex">\(\leq1.2\)</span> s;</li>
+<li><code>BRAKE</code> if TTC <span class="arithmatex">\(&lt;2.5\)</span> s, gap <span class="arithmatex">\(&lt;0.72d_{\mathrm{des}}\)</span>, or the selected target
+   is more than <span class="arithmatex">\(1\ \mathrm{m/s}\)</span> below ego speed;</li>
+<li>otherwise <code>FOLLOW</code> or <code>CRUISE</code>;</li>
+<li>after a radar fault clears, remain in <code>SAFE_STOP</code> until health has been
+   continuously valid for <span class="arithmatex">\(1.0\)</span> s.</li>
+</ol>
+<p>Fill the last two columns:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Sample</th>
+<th>Health</th>
+<th>Lead</th>
+<th style="text-align: right;"><span class="arithmatex">\(v\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(v_L\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(d\)</span></th>
+<th style="text-align: right;">TTC</th>
+<th style="text-align: right;">Healthy recovery time</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">A</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">B</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">C</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1.25</td>
+<td style="text-align: right;">—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">D</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">E</td>
+<td>failed</td>
+<td>no</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0.0</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">F</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><span class="arithmatex">\(\infty\)</span></td>
+<td style="text-align: right;">0.4</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">G</td>
+<td>valid</td>
+<td>yes</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><span class="arithmatex">\(\infty\)</span></td>
+<td style="text-align: right;">1.1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Explain why <code>lead_detected == False</code> is not a valid radar-failure test.</p>
+<details class="success">
+<summary>Case 3 — worked interpretation</summary>
+<p>A and B are <code>BRAKE</code>: their continuous ACC targets are far below the ego
+speeds. C is still <code>BRAKE</code> because TTC is just above the emergency
+threshold. D is <code>EMERGENCY</code>. E is <code>SAFE_STOP</code> and latches the supervisor.
+F remains <code>SAFE_STOP</code> because the confirmation interval is incomplete. At
+G the latch may clear and normal ACC gives <code>FOLLOW</code>.</p>
+<p>A healthy radar can report no lead because the road is genuinely empty or
+the target is outside the sensor range. Detection status and health status
+answer different questions.</p>
+</details>
+<h2 id="case-4-diagnose-candidates-without-hiding-failures-in-a-score">Case 4 — Diagnose candidates without hiding failures in a score</h2>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th style="text-align: right;">Cases passed</th>
+<th style="text-align: right;">Minimum gap</th>
+<th style="text-align: right;">Maximum path error</th>
+<th style="text-align: right;">RMS jerk</th>
+<th style="text-align: right;">Completion time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">6/6</td>
+<td style="text-align: right;">4.8 m</td>
+<td style="text-align: right;">1.20 m</td>
+<td style="text-align: right;">2.8 m/s³</td>
+<td style="text-align: right;">39 s</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">5/6</td>
+<td style="text-align: right;">2.4 m</td>
+<td style="text-align: right;">0.60 m</td>
+<td style="text-align: right;">1.4 m/s³</td>
+<td style="text-align: right;">34 s</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">6/6</td>
+<td style="text-align: right;">7.5 m</td>
+<td style="text-align: right;">0.85 m</td>
+<td style="text-align: right;">3.6 m/s³</td>
+<td style="text-align: right;">43 s</td>
+</tr>
+</tbody>
+</table>
+<p>Requirements are: all cases pass, minimum gap <span class="arithmatex">\(&gt;3\)</span> m, maximum path error
+<span class="arithmatex">\(\leq1.60\)</span> m.</p>
+<p>Tasks:</p>
+<ol>
+<li>apply the safety gates before ranking;</li>
+<li>determine whether A or C dominates the other;</li>
+<li>select a candidate for a comfort-critical shuttle;</li>
+<li>select a candidate for a time-critical closed-course demonstrator;</li>
+<li>state which additional evidence could reverse each decision.</li>
+</ol>
+<details class="success">
+<summary>Case 4 — worked interpretation</summary>
+<p>Candidate B is rejected before scoring. Neither A nor C dominates the
+other: A is faster and smoother in jerk, while C has better gap and lateral
+margins. C is defensible for a safety-margin-focused shuttle, although its
+higher jerk needs investigation. A is defensible for the closed-course
+demonstrator if its smaller margins remain acceptable in further tests.</p>
+</details>
+<h2 id="case-5-design-the-test-that-could-disprove-your-conclusion">Case 5 — Design the test that could disprove your conclusion</h2>
+<p>Choose the candidate selected in Case 4. Propose a four-run campaign that is
+specifically likely to expose its weakness. Include:</p>
+<ul>
+<li>a baseline;</li>
+<li>one changed initial condition;</li>
+<li>one sensor or actuator fault;</li>
+<li>one combined case;</li>
+<li>a fixed random seed for pairwise comparison;</li>
+<li>one metric expected to fail first.</li>
+</ul>
+<p>There is no single numerical solution. A strong answer creates a plausible
+counterexample rather than another easy nominal run.</p>
+<h2 id="computational-verification">Computational verification</h2>
+<p>Run the supplied checker after completing the calculations:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python courses\day_3\demos\lesson3_integrated_case_study.py
+</code></pre></div>
+<p>It prints the Case 1 constraint calculation, the Case 2 stopping envelope and
+the positive root for maximum feasible speed. If your values differ, compare
+units and signs before changing the equations.</p>
+<h2 id="fast-team-investigation">Fast-team investigation</h2>
+<p>Derive the maximum feasible ego-speed formula for Case 2 symbolically. Then
+plot <span class="arithmatex">\(v_{\max}\)</span> for braking efficiency from 0.4 to 1.0 and latency from 0 to
+0.6 s. Identify the region where the original 18 m/s approach is feasible.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

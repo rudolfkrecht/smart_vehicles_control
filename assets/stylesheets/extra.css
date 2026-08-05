@@ -1,0 +1,25 @@
+:root {
+  --md-primary-fg-color: #1557a0;
+  --md-accent-fg-color: #1488cc;
+}
+
+.md-typeset .hero {
+  padding: 2.2rem;
+  margin: 1rem 0 2rem;
+  color: white;
+  background: linear-gradient(135deg, #0d3b66, #1976b9);
+  border-radius: 0.7rem;
+}
+
+.md-typeset .hero h1 {
+  color: white;
+  margin-bottom: 0.4rem;
+}
+
+.md-typeset .course-card {
+  height: 100%;
+  padding: 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+}
+

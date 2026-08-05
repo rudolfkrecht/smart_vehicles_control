@@ -1,0 +1,2379 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hands-on control engineering course for the Smart Vehicles Summer School 2026">
+      
+      
+        <meta name="author" content="Rudolf Krecht">
+      
+      
+        <link rel="canonical" href="https://rudolfkrecht.github.io/smart_vehicles_control/day1/lesson1/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../lesson2/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>1. Theory overview - Control of Self-Driving Vehicles</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lesson-1-theory-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-header__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Control of Self-Driving Vehicles
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Theory overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Day 1 — Longitudinal Control
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day2/" class="md-tabs__link">
+          
+  
+  
+  Day 2 — Path Following
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day3/" class="md-tabs__link">
+          
+  
+  
+  Day 3 — Integrated ADAS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day4/" class="md-tabs__link">
+          
+  
+  
+  Day 4 — Testing and Robustness
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../resources/python-reference/" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../submission/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Project submission
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-nav__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Control of Self-Driving Vehicles
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Course overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Four-day schedule
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 1 — Longitudinal Control
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1 — Longitudinal Control
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-control-fits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where control fits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Where control fits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opening-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opening prediction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-loop-versus-closed-loop-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open-loop versus closed-loop control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-minute-identification-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      One-minute identification task
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-requirements-before-tuning-a-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining requirements before tuning a controller
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining requirements before tuning a controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample acceptance criteria
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#longitudinal-force-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Longitudinal force balance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Longitudinal force balance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meaning-of-the-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meaning of the terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equilibrium-speed-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equilibrium-speed calculation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p-and-pi-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      P and PI control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P and PI control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-p-control-retains-error-on-a-hill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why P control retains error on a hill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-one-step-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked one-step example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saturation-windup-and-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saturation, windup and review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Saturation, windup and review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#individual-exit-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Individual exit check
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve activity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Longitudinal control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 2 — Path Following
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2 — Path Following
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Lateral control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 3 — Integrated ADAS
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3 — Integrated ADAS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. ADAS in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project workshop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 4 — Testing and Robustness
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4 — Testing and Robustness
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Robustness verification in simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/python-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/formula-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formula sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project submission
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-control-fits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where control fits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Where control fits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opening-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opening prediction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-loop-versus-closed-loop-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open-loop versus closed-loop control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-minute-identification-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      One-minute identification task
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-requirements-before-tuning-a-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining requirements before tuning a controller
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining requirements before tuning a controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample acceptance criteria
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#longitudinal-force-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Longitudinal force balance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Longitudinal force balance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meaning-of-the-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Meaning of the terms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equilibrium-speed-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equilibrium-speed calculation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p-and-pi-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      P and PI control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P and PI control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-p-control-retains-error-on-a-hill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why P control retains error on a hill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-one-step-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked one-step example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saturation-windup-and-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saturation, windup and review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Saturation, windup and review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#individual-exit-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Individual exit check
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve activity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lesson-1-theory-overview">Lesson 1 — Theory overview</h1>
+<p><strong>Format:</strong> Guided theory overview with short prediction questions</p>
+<p><strong>Central question:</strong> How can a vehicle maintain <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> when the
+road load changes?</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>By the end of this lesson, you should be able to:</p>
+<ul>
+<li>place motion control within an autonomous-driving system;</li>
+<li>identify the elements and signals of a closed feedback loop;</li>
+<li>explain the longitudinal force-balance model;</li>
+<li>distinguish targets, constraints and performance metrics;</li>
+<li>predict the main differences between open-loop, P and PI control;</li>
+<li>explain why saturation and windup matter in a physical vehicle.</li>
+</ul>
+<h2 id="where-control-fits">Where control fits</h2>
+<p>An autonomous vehicle must answer three different questions:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Question</th>
+<th>Example output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perception and localization</td>
+<td>What is around the vehicle, and where am I?</td>
+<td>Vehicle pose, lane boundary, obstacle distance</td>
+</tr>
+<tr>
+<td>Planning and decision</td>
+<td>What should the vehicle do next?</td>
+<td>Target path and target speed</td>
+</tr>
+<tr>
+<td>Motion control</td>
+<td>What actuator command should realize that request?</td>
+<td>Accelerator, brake and steering commands</td>
+</tr>
+</tbody>
+</table>
+<p>Planning <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> does not make the physical vehicle travel at
+<span class="arithmatex">\(15\ \mathrm{m/s}\)</span>. The controller must translate the request into forces
+while responding to measurement error, road load and actuator constraints.</p>
+<h3 id="opening-prediction">Opening prediction</h3>
+<blockquote>
+<p>A vehicle receives a constant <span class="arithmatex">\(40\%\)</span> accelerator command on a flat road.
+Does it accelerate forever, settle to a constant speed, or return to rest?</p>
+</blockquote>
+<p>Increasing aerodynamic drag eventually balances the applied force, so the simplified vehicle approaches an equilibrium speed.</p>
+<h3 id="open-loop-versus-closed-loop-control">Open-loop versus closed-loop control</h3>
+<p>An open-loop controller applies a command without using the measured outcome.
+A closed-loop controller compares the target with the measured speed and acts
+on their difference.</p>
+<pre class="mermaid"><code>flowchart LR
+    R["Target speed"] --&gt; E["Error"]
+    E --&gt; C["Controller"]
+    C --&gt; V["Vehicle"]
+    V --&gt; M["Measured speed"]
+    M --&gt; E</code></pre>
+<p>For negative feedback, define:</p>
+<div class="arithmatex">\[
+e(t)=v_\mathrm{target}(t)-v_\mathrm{measured}(t).
+\]</div>
+<p>If the vehicle is too slow, <span class="arithmatex">\(e&gt;0\)</span>, so the controller should increase the drive
+command. If it is too fast, <span class="arithmatex">\(e&lt;0\)</span>, so the controller should reduce drive or
+request braking. A sign error would create positive feedback and push the
+vehicle farther away from the target.</p>
+<h3 id="one-minute-identification-task">One-minute identification task</h3>
+<p>Identify each feedback-loop element for cruise control:</p>
+<table>
+<thead>
+<tr>
+<th>Abstract element</th>
+<th>Cruise-control example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference</td>
+<td>Requested speed</td>
+</tr>
+<tr>
+<td>Measured output</td>
+<td>Wheel-speed or fused vehicle-speed estimate</td>
+</tr>
+<tr>
+<td>Error</td>
+<td>Requested minus measured speed</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>P or PI calculation</td>
+</tr>
+<tr>
+<td>Actuator</td>
+<td>Powertrain and brakes</td>
+</tr>
+<tr>
+<td>Plant</td>
+<td>Vehicle longitudinal dynamics</td>
+</tr>
+<tr>
+<td>Disturbance</td>
+<td>Hill, wind, payload or rolling resistance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="defining-requirements-before-tuning-a-controller">Defining requirements before tuning a controller</h2>
+<p>A controller cannot be called “good” until its requirements are stated. Separate
+three kinds of statement:</p>
+<ul>
+<li><strong>Target:</strong> the intended value, such as <span class="arithmatex">\(v_\mathrm{target}=15\ \mathrm{m/s}\)</span>.</li>
+<li><strong>Constraint:</strong> a hard or practical limit, such as <span class="arithmatex">\(-1\le u\le1\)</span>.</li>
+<li><strong>Metric:</strong> a measured property used for comparison.</li>
+</ul>
+<p>For a step from rest to a constant target:</p>
+<div class="arithmatex">\[
+t_r=\min\{t:v(t)\ge0.9v_\mathrm{target}\}
+\]</div>
+<p>is the 90% rise time, and</p>
+<div class="arithmatex">\[
+M_P=
+\frac{\max_t v(t)-v_\mathrm{target}}
+{v_\mathrm{target}}\cdot100\%
+\]</div>
+<p>is percentage overshoot. Settling time is the time after which the response
+remains inside a chosen band, here <span class="arithmatex">\(\pm5\%\)</span>. Final error and RMSE are:</p>
+<div class="arithmatex">\[
+e_\mathrm{final}=v_\mathrm{target}-\bar v_\mathrm{final},
+\qquad
+\mathrm{RMSE}=
+\sqrt{\frac{1}{N}\sum_{k=1}^{N}
+\left(v_{\mathrm{target},k}-v_k\right)^2}.
+\]</div>
+<p>These metrics answer different questions. A controller may have low final error
+but poor transient behaviour; another may rise quickly but spend too long at
+full actuator command.</p>
+<h3 id="sample-acceptance-criteria">Sample acceptance criteria</h3>
+<p>Day 1 uses the following example criteria:</p>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th style="text-align: right;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flat-road rise time</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;6\ \mathrm{s}\)</span></td>
+</tr>
+<tr>
+<td>Overshoot</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;10\%\)</span></td>
+</tr>
+<tr>
+<td>Flat-road saturation</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;20\%\)</span> of samples</td>
+</tr>
+<tr>
+<td>Persistent-hill final error</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;0.3\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Temporary-hill recovery</td>
+<td style="text-align: right;">Return to the 5% band within <span class="arithmatex">\(5\ \mathrm{s}\)</span> after the hill ends</td>
+</tr>
+</tbody>
+</table>
+<p>Consider:</p>
+<blockquote>
+<p>If controller A has the lowest RMSE but uses full throttle for twice as long
+as controller B, is A automatically preferable?</p>
+</blockquote>
+<p>The correct engineering response is “not without priorities and constraints.”</p>
+<h2 id="longitudinal-force-balance">Longitudinal force balance</h2>
+<p>Newton’s second law gives:</p>
+<div class="arithmatex">\[
+m\dot v =
+F_\mathrm{actuator}
+-F_\mathrm{rolling}
+-c_\mathrm{drag}v^2
+-F_\mathrm{hill}.
+\]</div>
+<p>The signs express the chosen positive direction. Drive force is positive.
+Rolling resistance, aerodynamic drag and an uphill disturbance oppose forward
+motion.</p>
+<h3 id="meaning-of-the-terms">Meaning of the terms</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Main dependence</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(m\dot v\)</span></td>
+<td>Mass and acceleration</td>
+<td>Inertial response</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{actuator}\)</span></td>
+<td>Command and actuator dynamics</td>
+<td>Propulsive or braking force</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{rolling}\)</span></td>
+<td>Approximately constant here</td>
+<td>Tire and bearing losses</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(c_\mathrm{drag}v^2\)</span></td>
+<td>Square of speed</td>
+<td>Aerodynamic resistance</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{hill}\)</span></td>
+<td>Road grade and mass</td>
+<td>External road-load disturbance</td>
+</tr>
+</tbody>
+</table>
+<p>The model uses different maximum drive and brake forces:</p>
+<div class="arithmatex">\[
+F_\mathrm{desired}=
+\begin{cases}
+uF_{\max}, &amp; u\ge0,\\
+uF_{\mathrm{brake,max}}, &amp; u&lt;0,
+\end{cases}
+\qquad -1\le u\le1.
+\]</div>
+<p>The actuator force does not change instantaneously. A first-order lag makes it
+approach the desired force:</p>
+<div class="arithmatex">\[
+\dot F_\mathrm{actuator}
+=\frac{F_\mathrm{desired}-F_\mathrm{actuator}}{\tau}.
+\]</div>
+<h3 id="equilibrium-speed-calculation">Equilibrium-speed calculation</h3>
+<p>At constant speed, <span class="arithmatex">\(\dot v=0\)</span>. On a flat road:</p>
+<div class="arithmatex">\[
+uF_{\max}-F_\mathrm{rolling}-c_\mathrm{drag}v_\mathrm{eq}^2=0.
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+v_\mathrm{eq}
+=\sqrt{
+\frac{uF_{\max}-F_\mathrm{rolling}}
+{c_\mathrm{drag}}
+}.
+\]</div>
+<p>This result resolves the opening prediction. It also shows that open-loop speed
+depends on the vehicle model: the same command gives a different equilibrium
+when drag, rolling resistance or road grade changes.</p>
+<div class="admonition question">
+<p class="admonition-title">Prediction prompts</p>
+<ol>
+<li>Does mass change the theoretical equilibrium speed in this model?</li>
+<li>Does mass change how quickly the vehicle approaches equilibrium?</li>
+<li>What happens to equilibrium speed if drag doubles?</li>
+</ol>
+</div>
+<details class="success">
+<summary>Answers</summary>
+<ol>
+<li>No. Mass disappears when acceleration is zero.</li>
+<li>Yes. Greater mass gives lower acceleration for the same net force.</li>
+<li>The equilibrium speed is divided by <span class="arithmatex">\(\sqrt{2}\)</span>, not by two.</li>
+</ol>
+</details>
+<h2 id="p-and-pi-control">P and PI control</h2>
+<p>A proportional controller uses the current error:</p>
+<div class="arithmatex">\[
+u_\mathrm{raw}=K_Pe,
+\qquad
+u=\operatorname{clip}(u_\mathrm{raw},-1,1).
+\]</div>
+<p>Increasing <span class="arithmatex">\(K_P\)</span> generally gives a stronger correction, but the physical
+command cannot exceed its limits. Once <span class="arithmatex">\(u_\mathrm{raw}&gt;1\)</span>, a larger gain does
+not produce more force at that instant.</p>
+<h3 id="why-p-control-retains-error-on-a-hill">Why P control retains error on a hill</h3>
+<p>Suppose a constant positive command <span class="arithmatex">\(u_\mathrm{hold}\)</span> is required to balance
+drag, rolling resistance and a hill. For P control:</p>
+<div class="arithmatex">\[
+u_\mathrm{hold}=K_Pe_\mathrm{ss}.
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+e_\mathrm{ss}=\frac{u_\mathrm{hold}}{K_P}.
+\]</div>
+<p>A non-zero command requires a non-zero steady-state error. Raising <span class="arithmatex">\(K_P\)</span>
+reduces this offset but may increase saturation and sensitivity to effects not
+represented in the simple simulation.</p>
+<p>A PI controller adds the accumulated error:</p>
+<div class="arithmatex">\[
+I_k=I_{k-1}+e_k\Delta t,
+\qquad
+u_{\mathrm{raw},k}=K_Pe_k+K_II_k.
+\]</div>
+<p>The integral term can supply the holding command even when the current error
+approaches zero. This is why PI control can reject a constant hill disturbance.</p>
+<h3 id="worked-one-step-example">Worked one-step example</h3>
+<p>Given <span class="arithmatex">\(v_\mathrm{target}=15\ \mathrm{m/s}\)</span>,
+<span class="arithmatex">\(v=12\ \mathrm{m/s}\)</span> and <span class="arithmatex">\(K_P=0.35\)</span>:</p>
+<div class="arithmatex">\[
+e=15-12=3\ \mathrm{m/s},
+\]</div>
+<div class="arithmatex">\[
+u_\mathrm{raw}=0.35(3)=1.05,
+\]</div>
+<div class="arithmatex">\[
+u=\operatorname{clip}(1.05,-1,1)=1.
+\]</div>
+<p>The controller asks for more than the actuator can provide. Increasing <span class="arithmatex">\(K_P\)</span>
+at this instant changes the raw command but not the applied command.</p>
+<h2 id="saturation-windup-and-review">Saturation, windup and review</h2>
+<p>During a steep hill, the target may be temporarily unreachable even at
+<span class="arithmatex">\(u=1\)</span>. Without anti-windup, a PI controller continues accumulating positive
+error. When the hill ends, the stored integral can keep the command positive
+even after the vehicle is too fast.</p>
+<p>Day 1 uses <strong>conditional integration</strong>: the integrator pauses when the command
+is saturated and the current error would drive it farther into saturation.</p>
+<h3 id="individual-exit-check">Individual exit check</h3>
+<p>Write one sentence for each answer:</p>
+<ol>
+<li>Why does a constant accelerator command not guarantee constant speed?</li>
+<li>What is the difference between a target, a constraint and a metric?</li>
+<li>Why does a P controller retain error under a constant hill load?</li>
+<li>Why can a larger <span class="arithmatex">\(K_P\)</span> have no physical effect during saturation?</li>
+<li>What behaviour does anti-windup try to prevent?</li>
+</ol>
+<details class="success">
+<summary>Suggested answers</summary>
+<ol>
+<li>The resulting speed depends on the balance between actuator force and
+   speed-dependent resistance and disturbances.</li>
+<li>A target states the desired value, a constraint limits allowable
+   behaviour, and a metric measures performance.</li>
+<li>P control needs a non-zero error to create the non-zero holding command.</li>
+<li>The applied command is already clipped at the actuator limit.</li>
+<li>It prevents excessive stored integral action and the resulting delayed
+   recovery or overshoot after saturation.</li>
+</ol>
+</details>
+<h2 id="reserve-activity">Reserve activity</h2>
+<p>Derive the open-loop command required to hold an arbitrary speed on a hill:</p>
+<div class="arithmatex">\[
+u_\mathrm{eq}
+=\frac{
+F_\mathrm{rolling}
++c_\mathrm{drag}v^2
++F_\mathrm{hill}
+}{F_{\max}}.
+\]</div>
+<p>Then evaluate whether <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> is physically reachable for
+<span class="arithmatex">\(F_\mathrm{hill}=4000\ \mathrm{N}\)</span> with the default vehicle. If
+<span class="arithmatex">\(u_\mathrm{eq}&gt;1\)</span>, no controller tuning can make the target feasible.</p>
+<p>This is the key distinction between a control-design problem and an actuator-
+authority problem.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

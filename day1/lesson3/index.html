@@ -1,0 +1,3228 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Hands-on control engineering course for the Smart Vehicles Summer School 2026">
+      
+      
+        <meta name="author" content="Rudolf Krecht">
+      
+      
+        <link rel="canonical" href="https://rudolfkrecht.github.io/smart_vehicles_control/day1/lesson3/">
+      
+      
+        <link rel="prev" href="../lesson2/">
+      
+      
+        <link rel="next" href="../lesson4/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>3. Numerical examples - Control of Self-Driving Vehicles</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lesson-3-four-numerical-engineering-exercises" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-header__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Control of Self-Driving Vehicles
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Numerical examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Day 1 — Longitudinal Control
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day2/" class="md-tabs__link">
+          
+  
+  
+  Day 2 — Path Following
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day3/" class="md-tabs__link">
+          
+  
+  
+  Day 3 — Integrated ADAS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../day4/" class="md-tabs__link">
+          
+  
+  
+  Day 4 — Testing and Robustness
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../resources/python-reference/" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../submission/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Project submission
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Control of Self-Driving Vehicles" class="md-nav__button md-logo" aria-label="Control of Self-Driving Vehicles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Control of Self-Driving Vehicles
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rudolfkrecht/smart_vehicles_control" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rudolfkrecht/smart_vehicles_control
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Course overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Four-day schedule
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 1 — Longitudinal Control
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1 — Longitudinal Control
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-force-definitions-and-sign-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model, force definitions and sign convention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model, force definitions and sign convention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-exactly-is-the-unit-of-c_mathrmdrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      What exactly is the unit of \(c_\mathrm{drag}\)?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-hill-force-to-slope-angle-and-road-grade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting hill force to slope angle and road grade
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-open-loop-equilibrium-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 — Open-loop equilibrium speed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 — Open-loop equilibrium speed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recording-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording area
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-one-p-control-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 — One P-control update
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 — One P-control update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recording-area_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording area
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-assessing-a-measured-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 — Assessing a measured response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 — Assessing a measured response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discussion-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discussion prompt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-extension-compare-two-incomplete-summaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering extension — compare two incomplete summaries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-pi-accumulation-and-windup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 — PI accumulation and windup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 — PI accumulation and windup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieval-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-activity-sensitivity-to-parameter-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve activity — Sensitivity to parameter error
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Longitudinal control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 2 — Path Following
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2 — Path Following
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Lateral control in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 3 — Integrated ADAS
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3 — Integrated ADAS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. ADAS in 3D simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project workshop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day 4 — Testing and Robustness
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4 — Testing and Robustness
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Day overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Theory overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Practical demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Numerical examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Simulator-based examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Robustness verification in simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/lesson6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Project work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/python-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/formula-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formula sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project submission
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-force-definitions-and-sign-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model, force definitions and sign convention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model, force definitions and sign convention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-exactly-is-the-unit-of-c_mathrmdrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      What exactly is the unit of \(c_\mathrm{drag}\)?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-hill-force-to-slope-angle-and-road-grade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting hill force to slope angle and road grade
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-open-loop-equilibrium-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 — Open-loop equilibrium speed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 — Open-loop equilibrium speed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recording-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording area
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-one-p-control-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 — One P-control update
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 — One P-control update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recording-area_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording area
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interpretation question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-assessing-a-measured-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 — Assessing a measured response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 — Assessing a measured response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discussion-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discussion prompt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-extension-compare-two-incomplete-summaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering extension — compare two incomplete summaries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-pi-accumulation-and-windup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 — PI accumulation and windup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 — PI accumulation and windup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#given_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Given
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engineering-challenge_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engineering challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieval-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-activity-sensitivity-to-parameter-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve activity — Sensitivity to parameter error
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lesson-3-four-numerical-engineering-exercises">Lesson 3 — Four numerical engineering exercises</h1>
+<p><strong>Format:</strong> Four short group calculations followed by a shared solution</p>
+<p><strong>Required output:</strong> Completed calculation and interpretation sheet</p>
+<p>This lesson converts the visual observations from Lesson 2 into quantitative
+engineering reasoning. Work on each exercise for approximately six minutes,
+then use the collapsible solution during the four-minute class check.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>By the end of this lesson, you should be able to:</p>
+<ul>
+<li>solve the longitudinal force balance at equilibrium;</li>
+<li>calculate raw and saturated P-controller commands;</li>
+<li>extract common response metrics from stated measurements;</li>
+<li>step through a discrete PI integrator;</li>
+<li>explain the physical meaning of every result and unit.</li>
+</ul>
+<h2 id="working-rules">Working rules</h2>
+<ol>
+<li>Write the equation symbolically before inserting numbers.</li>
+<li>Include units in every intermediate result.</li>
+<li>State whether the numerical answer is physically feasible.</li>
+<li>Reveal the worked solution only after the group attempt.</li>
+</ol>
+<p>Calculators and short Python expressions are allowed, but a numerical result
+without an equation and interpretation is incomplete.</p>
+<p>For each ten-minute exercise, use approximately six minutes for group work and
+four minutes to compare methods. If you finish early, attempt the engineering
+challenge before revealing the worked solution.</p>
+<h2 id="model-force-definitions-and-sign-convention">Model, force definitions and sign convention</h2>
+<p>All four exercises use the same one-dimensional longitudinal model. The
+positive direction is the vehicle's forward direction, up the road:</p>
+<div class="arithmatex">\[
+m a
+=F_\mathrm{drive}
+-F_\mathrm{rolling}
+-F_\mathrm{drag}
+-F_\mathrm{hill}.
+\]</div>
+<p>The individual forces are:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Definition</th>
+<th>Physical meaning</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{drive}\)</span></td>
+<td><span class="arithmatex">\(uF_{\max}\)</span></td>
+<td>Force generated by the powertrain at the road</td>
+<td><span class="arithmatex">\(\mathrm{N}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{rolling}\)</span></td>
+<td>constant <span class="arithmatex">\(180\ \mathrm{N}\)</span> in this simplified model</td>
+<td>Tyre and bearing losses opposing motion</td>
+<td><span class="arithmatex">\(\mathrm{N}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{drag}\)</span></td>
+<td><span class="arithmatex">\(c_\mathrm{drag}v^2\)</span> for forward motion</td>
+<td>Quadratic speed-dependent resistance</td>
+<td><span class="arithmatex">\(\mathrm{N}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{hill}\)</span></td>
+<td><span class="arithmatex">\(mg\sin\theta\)</span></td>
+<td>Component of gravity parallel to an uphill road</td>
+<td><span class="arithmatex">\(\mathrm{N}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(F_\mathrm{net}\)</span></td>
+<td>sum of all signed forces</td>
+<td>Force responsible for acceleration</td>
+<td><span class="arithmatex">\(\mathrm{N}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here, <span class="arithmatex">\(u\)</span> is a dimensionless normalized command. A value of <span class="arithmatex">\(u=0.35\)</span> means
+that the requested drive force is <span class="arithmatex">\(35\%\)</span> of <span class="arithmatex">\(F_{\max}\)</span>:</p>
+<div class="arithmatex">\[
+F_\mathrm{drive}=0.35(4500)=1575\ \mathrm{N}.
+\]</div>
+<p>The force unit newton is defined by Newton's second law:</p>
+<div class="arithmatex">\[
+1\ \mathrm{N}=1\ \mathrm{kg\,m\,s^{-2}}.
+\]</div>
+<h3 id="what-exactly-is-the-unit-of-c_mathrmdrag">What exactly is the unit of <span class="arithmatex">\(c_\mathrm{drag}\)</span>?</h3>
+<p>The quadratic drag model is:</p>
+<div class="arithmatex">\[
+F_\mathrm{drag}=c_\mathrm{drag}v^2.
+\]</div>
+<p>Therefore, the coefficient must convert squared speed into force:</p>
+<div class="arithmatex">\[
+[c_\mathrm{drag}]
+=\frac{\mathrm{N}}{(\mathrm{m/s})^2}
+=\frac{\mathrm{N\,s^2}}{\mathrm{m^2}}
+=\frac{\mathrm{kg}}{\mathrm{m}}.
+\]</div>
+<p>Thus, all of the following are equivalent units:</p>
+<div class="arithmatex">\[
+\boxed{
+4\ \mathrm{N/(m/s)^2}
+=4\ \mathrm{N\,s^2/m^2}
+=4\ \mathrm{kg/m}
+}
+\]</div>
+<p>For example, at <span class="arithmatex">\(v=15\ \mathrm{m/s}\)</span>:</p>
+<div class="arithmatex">\[
+F_\mathrm{drag}
+=\left(4\ \frac{\mathrm{N}}{(\mathrm{m/s})^2}\right)
+\left(15\ \mathrm{m/s}\right)^2
+=900\ \mathrm{N}.
+\]</div>
+<p>The speed units cancel correctly, leaving newtons. Do not confuse the
+dimensional coefficient <span class="arithmatex">\(c_\mathrm{drag}\)</span> with the dimensionless aerodynamic
+drag coefficient <span class="arithmatex">\(C_D\)</span>. If only aerodynamic drag is represented, then:</p>
+<div class="arithmatex">\[
+c_\mathrm{drag}=\frac{1}{2}\rho C_DA,
+\]</div>
+<p>where air density <span class="arithmatex">\(\rho\)</span> has unit <span class="arithmatex">\(\mathrm{kg/m^3}\)</span>, <span class="arithmatex">\(C_D\)</span> is dimensionless,
+and frontal area <span class="arithmatex">\(A\)</span> has unit <span class="arithmatex">\(\mathrm{m^2}\)</span>. The resulting unit is again
+<span class="arithmatex">\(\mathrm{kg/m}\)</span>.</p>
+<h3 id="converting-hill-force-to-slope-angle-and-road-grade">Converting hill force to slope angle and road grade</h3>
+<p>For a vehicle of mass <span class="arithmatex">\(m\)</span> on a road inclined by angle <span class="arithmatex">\(\theta\)</span>:</p>
+<div class="arithmatex">\[
+F_\mathrm{hill}=mg\sin\theta.
+\]</div>
+<p>If the force is known, the equivalent angle is:</p>
+<div class="arithmatex">\[
+\theta=\arcsin\left(\frac{F_\mathrm{hill}}{mg}\right).
+\]</div>
+<p>Road grade is normally expressed as vertical rise divided by horizontal run:</p>
+<div class="arithmatex">\[
+\mathrm{grade}\,[\%]=100\tan\theta.
+\]</div>
+<p>Angle and grade are related but are not numerically identical. For the
+<span class="arithmatex">\(1200\ \mathrm{kg}\)</span> vehicle used below, with <span class="arithmatex">\(g=9.81\ \mathrm{m/s^2}\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Opposing hill force</th>
+<th style="text-align: right;">Equivalent angle</th>
+<th style="text-align: right;">Approximate road grade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(0\ \mathrm{N}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0^\circ\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0\%\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(1000\ \mathrm{N}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(4.87^\circ\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(8.52\%\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(1500\ \mathrm{N}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(7.32^\circ\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(12.85\%\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(4000\ \mathrm{N}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(19.86^\circ\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(36.13\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In Exercise 1, “a <span class="arithmatex">\(1000\ \mathrm{N}\)</span> hill” therefore means that the model adds
+a constant <span class="arithmatex">\(1000\ \mathrm{N}\)</span> force opposing forward motion. For a
+<span class="arithmatex">\(1200\ \mathrm{kg}\)</span> vehicle, this is equivalent to driving uphill at
+approximately <span class="arithmatex">\(4.87^\circ\)</span>. On a downhill road, <span class="arithmatex">\(F_\mathrm{hill}\)</span> would have
+the opposite sign and gravity would assist the vehicle.</p>
+<div class="admonition note">
+<p class="admonition-title">A useful modelling distinction</p>
+<p>If <span class="arithmatex">\(F_\mathrm{hill}\)</span> is supplied directly as a fixed force, it remains the
+same when mass is changed. If the physical road angle <span class="arithmatex">\(\theta\)</span> is fixed,
+then <span class="arithmatex">\(F_\mathrm{hill}=mg\sin\theta\)</span> increases with mass. Always state
+which quantity is being held constant.</p>
+</div>
+<h2 id="exercise-1-open-loop-equilibrium-speed">Exercise 1 — Open-loop equilibrium speed</h2>
+<h3 id="given">Given</h3>
+<div class="arithmatex">\[
+F_{\max}=4500\ \mathrm{N},
+\quad
+F_\mathrm{rolling}=180\ \mathrm{N},
+\quad
+c_\mathrm{drag}=4\ \mathrm{N/(m/s)^2}=4\ \mathrm{kg/m},
+\quad
+u=0.35,
+\quad
+m=1200\ \mathrm{kg}.
+\]</div>
+<p>At equilibrium:</p>
+<div class="arithmatex">\[
+uF_{\max}
+-F_\mathrm{rolling}
+-c_\mathrm{drag}v^2
+-F_\mathrm{hill}=0.
+\]</div>
+<h3 id="tasks">Tasks</h3>
+<ol>
+<li>Draw or list the four longitudinal forces and mark their directions.</li>
+<li>Calculate the drive force produced by <span class="arithmatex">\(u=0.35\)</span>.</li>
+<li>Calculate the equilibrium speed on a flat road.</li>
+<li>Convert a <span class="arithmatex">\(1000\ \mathrm{N}\)</span> opposing hill force into an equivalent road
+   angle for the <span class="arithmatex">\(1200\ \mathrm{kg}\)</span> vehicle.</li>
+<li>Calculate the equilibrium speed with that uphill disturbance.</li>
+<li>Calculate the command required to maintain
+   <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> on that hill.</li>
+<li>State whether the required command is feasible and calculate the remaining
+   drive-force margin.</li>
+<li>Explain why vehicle mass is absent when the hill is given directly as a
+   force, but reappears when the hill is specified as a road angle.</li>
+</ol>
+<h3 id="recording-area">Recording area</h3>
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>Symbolic expression</th>
+<th style="text-align: right;">Numerical value</th>
+<th>Feasible?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Drive force at <span class="arithmatex">\(u=0.35\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td>Equivalent slope angle and grade</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td>Flat-road equilibrium speed</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td>Hill equilibrium speed</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td>Command at <span class="arithmatex">\(15\ \mathrm{m/s}\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<details class="success">
+<summary>Worked solution</summary>
+<p><strong>Step 1 — Define the drive force.</strong></p>
+<div class="arithmatex">\[
+F_\mathrm{drive}=uF_{\max}
+=0.35(4500\ \mathrm{N})
+=1575\ \mathrm{N}.
+\]</div>
+<p>On a flat road, this forward force is opposed by rolling resistance and
+quadratic drag.</p>
+<p><strong>Step 2 — Calculate the flat-road equilibrium speed.</strong></p>
+<p>At equilibrium, acceleration and net force are zero:</p>
+<div class="arithmatex">\[
+0=F_\mathrm{drive}-F_\mathrm{rolling}-c_\mathrm{drag}v^2.
+\]</div>
+<p>Rearranging:</p>
+<div class="arithmatex">\[
+v_\mathrm{flat}
+=\sqrt{
+\frac{uF_{\max}-F_\mathrm{rolling}}
+{c_\mathrm{drag}}
+}
+=\sqrt{
+\frac{0.35(4500)-180}{4}
+}
+=18.67\ \mathrm{m/s}.
+\]</div>
+<p>The unit check is:</p>
+<div class="arithmatex">\[
+\sqrt{\frac{\mathrm{N}}{\mathrm{N/(m/s)^2}}}
+=\sqrt{(\mathrm{m/s})^2}
+=\mathrm{m/s}.
+\]</div>
+<p><strong>Step 3 — Interpret the <span class="arithmatex">\(1000\ \mathrm{N}\)</span> hill.</strong></p>
+<p>The equivalent angle is:</p>
+<div class="arithmatex">\[
+\theta
+=\arcsin\left(
+\frac{1000}{1200(9.81)}
+\right)
+=4.87^\circ.
+\]</div>
+<p><strong>Step 4 — Calculate hill equilibrium speed.</strong></p>
+<div class="arithmatex">\[
+v_\mathrm{hill}
+=\sqrt{
+\frac{0.35(4500)-180-1000}{4}
+}
+=9.94\ \mathrm{m/s}.
+\]</div>
+<p>A real-valued equilibrium exists because the remaining force available for
+drag is positive:</p>
+<div class="arithmatex">\[
+1575-180-1000=395\ \mathrm{N}&gt;0.
+\]</div>
+<p><strong>Step 5 — Find the command needed at <span class="arithmatex">\(15\ \mathrm{m/s}\)</span>.</strong></p>
+<p>First calculate the required resistance balance:</p>
+<div class="arithmatex">\[
+F_\mathrm{required}
+=180+4(15)^2+1000
+=2080\ \mathrm{N}.
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+u_\mathrm{eq}
+=\frac{F_\mathrm{required}}{F_{\max}}
+=\frac{2080}{4500}
+=0.462.
+\]</div>
+<p>The command is feasible because <span class="arithmatex">\(0.462&lt;1\)</span>. At this operating point, the
+unused drive-force margin is:</p>
+<div class="arithmatex">\[
+F_\mathrm{margin}=4500-2080=2420\ \mathrm{N}.
+\]</div>
+<p>Mass affects transient acceleration through <span class="arithmatex">\(ma\)</span>. If the hill is already
+supplied as the fixed force <span class="arithmatex">\(1000\ \mathrm{N}\)</span>, then at equilibrium
+<span class="arithmatex">\(a=0\)</span> and the inertial term vanishes. However, if the road is specified by
+its fixed angle, mass determines
+<span class="arithmatex">\(F_\mathrm{hill}=mg\sin\theta\)</span> and therefore does affect equilibrium.</p>
+</details>
+<h3 id="interpretation-question">Interpretation question</h3>
+<p>The command was calibrated to <span class="arithmatex">\(u=0.35\)</span> on a flat road. Why is increasing mass
+alone not enough to change the theoretical final flat-road speed in this model,
+even though a heavier vehicle clearly responds differently during acceleration?</p>
+<p>The distinction is between <strong>steady-state balance</strong> and <strong>transient dynamics</strong>.
+This conclusion also relies on the simplified assumptions that
+<span class="arithmatex">\(F_\mathrm{rolling}\)</span> and <span class="arithmatex">\(F_{\max}\)</span> do not change with mass. In a more
+realistic model, rolling resistance is often approximated by
+<span class="arithmatex">\(C_\mathrm{rr}mg\)</span>, so additional mass can also change the steady-state balance.</p>
+<h3 id="engineering-challenge">Engineering challenge</h3>
+<p>Calculate the minimum drive-force limit needed to maintain <span class="arithmatex">\(15\ \mathrm{m/s}\)</span>
+under a <span class="arithmatex">\(4000\ \mathrm{N}\)</span> hill load. For a <span class="arithmatex">\(1200\ \mathrm{kg}\)</span> vehicle, also
+calculate the equivalent road angle. Compare the required drive force
+with the default <span class="arithmatex">\(4500\ \mathrm{N}\)</span> limit.</p>
+<details class="success">
+<summary>Challenge answer</summary>
+<div class="arithmatex">\[
+F_{\max,\mathrm{required}}
+=180+4(15)^2+4000
+=5080\ \mathrm{N}.
+\]</div>
+<p>The default actuator is insufficient. Controller tuning cannot overcome
+the missing <span class="arithmatex">\(580\ \mathrm{N}\)</span> of physical authority.</p>
+<p>The equivalent slope is:</p>
+<div class="arithmatex">\[
+\theta
+=\arcsin\left(\frac{4000}{1200(9.81)}\right)
+=19.86^\circ,
+\]</div>
+<p>This is an extremely steep road. The large value is useful as an actuator
+authority test, not as a typical passenger-car road.</p>
+</details>
+<h2 id="exercise-2-one-p-control-update">Exercise 2 — One P-control update</h2>
+<h3 id="given_1">Given</h3>
+<div class="arithmatex">\[
+v_\mathrm{target}=15\ \mathrm{m/s},
+\quad
+v=12\ \mathrm{m/s},
+\quad
+K_P=0.35\,(\mathrm{m/s})^{-1}.
+\]</div>
+<p>The controller and actuator limits are:</p>
+<div class="arithmatex">\[
+e=v_\mathrm{target}-v,
+\qquad
+u_\mathrm{raw}=K_Pe,
+\qquad
+u=\operatorname{clip}(u_\mathrm{raw},-1,1).
+\]</div>
+<p>The vehicle parameters at this instant are:</p>
+<div class="arithmatex">\[
+m=1200\ \mathrm{kg},
+\quad
+F_{\max}=4500\ \mathrm{N},
+\quad
+F_\mathrm{rolling}=180\ \mathrm{N},
+\quad
+c_\mathrm{drag}=4\ \mathrm{N/(m/s)^2}.
+\]</div>
+<p>Assume the actuator force has already reached the requested full-drive force and
+the road is flat.</p>
+<p>Because <span class="arithmatex">\(u\)</span> is dimensionless while the speed error has unit <span class="arithmatex">\(\mathrm{m/s}\)</span>,
+<span class="arithmatex">\(K_P\)</span> is not dimensionless in this formulation:</p>
+<div class="arithmatex">\[
+[K_P]
+=\frac{1}{\mathrm{m/s}}
+=\mathrm{s/m}.
+\]</div>
+<p>In informal controller-tuning discussions the unit is often omitted, but
+including it makes the equation dimensionally consistent.</p>
+<h3 id="tasks_1">Tasks</h3>
+<ol>
+<li>Calculate the speed error.</li>
+<li>Calculate the raw controller command.</li>
+<li>Apply the actuator saturation.</li>
+<li>Calculate aerodynamic drag at <span class="arithmatex">\(12\ \mathrm{m/s}\)</span>.</li>
+<li>Define and calculate drive force, net force and acceleration.</li>
+<li>Decide whether increasing <span class="arithmatex">\(K_P\)</span> to <span class="arithmatex">\(0.70\)</span> changes the physical
+   acceleration at this exact instant.</li>
+<li>Repeat the force and acceleration calculation for a <span class="arithmatex">\(5^\circ\)</span> uphill road.
+   Calculate the corresponding hill force and road grade first.</li>
+</ol>
+<h3 id="recording-area_1">Recording area</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Equation</th>
+<th style="text-align: right;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error <span class="arithmatex">\(e\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Raw command <span class="arithmatex">\(u_\mathrm{raw}\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Applied command <span class="arithmatex">\(u\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Drag force</td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Drive force</td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Hill force at <span class="arithmatex">\(5^\circ\)</span></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Net force</td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Acceleration</td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<details class="success">
+<summary>Worked solution</summary>
+<div class="arithmatex">\[
+e=15-12=3\ \mathrm{m/s}.
+\]</div>
+<div class="arithmatex">\[
+u_\mathrm{raw}=0.35(3)=1.05.
+\]</div>
+<div class="arithmatex">\[
+u=\operatorname{clip}(1.05,-1,1)=1.
+\]</div>
+<p>The drag force is:</p>
+<div class="arithmatex">\[
+F_\mathrm{drag}=4(12)^2=576\ \mathrm{N}.
+\]</div>
+<p>The net force and acceleration are:</p>
+<div class="arithmatex">\[
+F_\mathrm{drive}=uF_{\max}=1(4500)=4500\ \mathrm{N},
+\]</div>
+<div class="arithmatex">\[
+F_\mathrm{net}
+=F_\mathrm{drive}-F_\mathrm{rolling}-F_\mathrm{drag}
+=4500-180-576
+=3744\ \mathrm{N},
+\]</div>
+<div class="arithmatex">\[
+a=\frac{3744}{1200}=3.12\ \mathrm{m/s^2}.
+\]</div>
+<p>With <span class="arithmatex">\(K_P=0.70\)</span>, the raw command would be <span class="arithmatex">\(2.10\)</span>, but the applied
+command would still be <span class="arithmatex">\(1\)</span>. Under the stated assumption that actuator
+force has settled, the acceleration would therefore be unchanged at that
+instant.</p>
+<p>For the <span class="arithmatex">\(5^\circ\)</span> uphill extension:</p>
+<div class="arithmatex">\[
+F_\mathrm{hill}
+=mg\sin\theta
+=1200(9.81)\sin(5^\circ)
+=1026\ \mathrm{N}.
+\]</div>
+<p>The road grade is:</p>
+<div class="arithmatex">\[
+100\tan(5^\circ)=8.75\%.
+\]</div>
+<p>The net force and acceleration become:</p>
+<div class="arithmatex">\[
+F_\mathrm{net,hill}
+=4500-180-576-1026
+=2718\ \mathrm{N},
+\]</div>
+<div class="arithmatex">\[
+a_\mathrm{hill}
+=\frac{2718}{1200}
+=2.27\ \mathrm{m/s^2}.
+\]</div>
+<p>The same saturated command therefore produces less acceleration uphill
+because part of the available drive force must balance gravity.</p>
+</details>
+<h3 id="interpretation-question_1">Interpretation question</h3>
+<p>Why may the actual simulator acceleration still lag behind
+<span class="arithmatex">\(3.12\ \mathrm{m/s^2}\)</span> immediately after the command reaches <span class="arithmatex">\(u=1\)</span>?</p>
+<p>The model includes a <span class="arithmatex">\(0.35\ \mathrm{s}\)</span> actuator time constant. Command
+saturation is immediate, but physical actuator force approaches its requested
+value over time.</p>
+<h3 id="engineering-challenge_1">Engineering challenge</h3>
+<p>Use Euler integration with <span class="arithmatex">\(\Delta t=0.05\ \mathrm{s}\)</span> to estimate the next
+speed if acceleration remained constant during one step:</p>
+<div class="arithmatex">\[
+v_{k+1}=v_k+a_k\Delta t.
+\]</div>
+<details class="success">
+<summary>Challenge answer</summary>
+<div class="arithmatex">\[
+v_{k+1}=12+3.12(0.05)=12.156\ \mathrm{m/s}.
+\]</div>
+<p>This is only a one-step approximation. Drag and controller error change as
+speed changes.</p>
+</details>
+<h2 id="exercise-3-assessing-a-measured-response">Exercise 3 — Assessing a measured response</h2>
+<h3 id="given_2">Given</h3>
+<p>A test from rest to <span class="arithmatex">\(15\ \mathrm{m/s}\)</span> produced:</p>
+<ul>
+<li>90% of target first reached at <span class="arithmatex">\(6.8\ \mathrm{s}\)</span>;</li>
+<li>peak speed <span class="arithmatex">\(16.2\ \mathrm{m/s}\)</span>;</li>
+<li>response permanently entered the <span class="arithmatex">\(\pm5\%\)</span> band at <span class="arithmatex">\(9.4\ \mathrm{s}\)</span>;</li>
+<li>mean speed over the final two seconds <span class="arithmatex">\(14.6\ \mathrm{m/s}\)</span>;</li>
+<li>command saturated for <span class="arithmatex">\(18\%\)</span> of samples;</li>
+<li>RMSE <span class="arithmatex">\(3.2\ \mathrm{m/s}\)</span>.</li>
+</ul>
+<p>Interpret the reported measurements as follows:</p>
+<ul>
+<li><strong>rise time:</strong> the time required to first reach <span class="arithmatex">\(90\%\)</span> of the target;</li>
+<li><strong>peak speed:</strong> the largest measured speed during the test;</li>
+<li><strong>settling time:</strong> the first time after which the speed never leaves the
+  specified tolerance band;</li>
+<li><strong>final error:</strong> target speed minus the representative final measured speed;</li>
+<li><strong>saturation percentage:</strong> fraction of samples for which the applied command
+  is at an actuator limit;</li>
+<li><strong>RMSE:</strong> the root mean square of the speed error over all <span class="arithmatex">\(N\)</span> samples.</li>
+</ul>
+<p>For this test, the <span class="arithmatex">\(90\%\)</span> threshold and the <span class="arithmatex">\(\pm5\%\)</span> settling band are:</p>
+<div class="arithmatex">\[
+v_{90\%}=0.90(15)=13.5\ \mathrm{m/s},
+\]</div>
+<div class="arithmatex">\[
+v_\mathrm{lower}=0.95(15)=14.25\ \mathrm{m/s},
+\qquad
+v_\mathrm{upper}=1.05(15)=15.75\ \mathrm{m/s}.
+\]</div>
+<p>The RMSE definition is:</p>
+<div class="arithmatex">\[
+\mathrm{RMSE}
+=\sqrt{\frac{1}{N}\sum_{k=1}^{N}
+\left(v_{\mathrm{target},k}-v_k\right)^2}.
+\]</div>
+<p>It has the same unit as speed, <span class="arithmatex">\(\mathrm{m/s}\)</span>.</p>
+<p>Requirements:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rise time</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;7.0\ \mathrm{s}\)</span></td>
+</tr>
+<tr>
+<td>Overshoot</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;10\%\)</span></td>
+</tr>
+<tr>
+<td>Settling time</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;10.0\ \mathrm{s}\)</span></td>
+</tr>
+<tr>
+<td>Absolute final error</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;0.3\ \mathrm{m/s}\)</span></td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;20\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tasks_2">Tasks</h3>
+<ol>
+<li>State the rise time.</li>
+<li>Calculate the <span class="arithmatex">\(90\%\)</span> threshold and verify what event defines the reported
+   rise time.</li>
+<li>Calculate percentage overshoot.</li>
+<li>Calculate the numerical limits of the <span class="arithmatex">\(\pm5\%\)</span> settling band.</li>
+<li>State the settling time.</li>
+<li>Calculate signed and absolute final error.</li>
+<li>Mark every requirement separately as pass or fail.</li>
+<li>Decide whether the controller passes the complete specification.</li>
+<li>Explain why RMSE cannot replace every other metric.</li>
+</ol>
+<h3 id="assessment-table">Assessment table</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">Calculated value</th>
+<th style="text-align: right;">Requirement</th>
+<th>Pass/fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rise time</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;7.0\ \mathrm{s}\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Overshoot</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;10\%\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Settling time</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;10.0\ \mathrm{s}\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Absolute final error</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;0.3\ \mathrm{m/s}\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="arithmatex">\(&lt;20\%\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<details class="success">
+<summary>Worked solution</summary>
+<p>The <span class="arithmatex">\(90\%\)</span> speed threshold is:</p>
+<div class="arithmatex">\[
+0.90(15)=13.5\ \mathrm{m/s}.
+\]</div>
+<p>The response first reaches this value at <span class="arithmatex">\(6.8\ \mathrm{s}\)</span>, so the rise
+time under the stated course definition is:</p>
+<div class="arithmatex">\[
+t_r=6.8\ \mathrm{s}.
+\]</div>
+<p>Overshoot is:</p>
+<div class="arithmatex">\[
+M_P=
+\frac{16.2-15}{15}\cdot100
+=8\%.
+\]</div>
+<p>Settling time is:</p>
+<div class="arithmatex">\[
+t_s=9.4\ \mathrm{s}.
+\]</div>
+<p>The settling band is:</p>
+<div class="arithmatex">\[
+15\pm0.05(15)
+=15\pm0.75\ \mathrm{m/s},
+\]</div>
+<p>or <span class="arithmatex">\(14.25\)</span> to <span class="arithmatex">\(15.75\ \mathrm{m/s}\)</span>. Reaching this band once is not
+sufficient; the response must remain inside it after <span class="arithmatex">\(t_s\)</span>.</p>
+<p>Signed final error is:</p>
+<div class="arithmatex">\[
+e_\mathrm{final}=15-14.6=0.4\ \mathrm{m/s},
+\]</div>
+<p>so the absolute final error is also <span class="arithmatex">\(0.4\ \mathrm{m/s}\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">Value</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rise time</td>
+<td style="text-align: right;"><span class="arithmatex">\(6.8\ \mathrm{s}\)</span></td>
+<td>Pass</td>
+</tr>
+<tr>
+<td>Overshoot</td>
+<td style="text-align: right;"><span class="arithmatex">\(8\%\)</span></td>
+<td>Pass</td>
+</tr>
+<tr>
+<td>Settling time</td>
+<td style="text-align: right;"><span class="arithmatex">\(9.4\ \mathrm{s}\)</span></td>
+<td>Pass</td>
+</tr>
+<tr>
+<td>Absolute final error</td>
+<td style="text-align: right;"><span class="arithmatex">\(0.4\ \mathrm{m/s}\)</span></td>
+<td><strong>Fail</strong></td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td style="text-align: right;"><span class="arithmatex">\(18\%\)</span></td>
+<td>Pass</td>
+</tr>
+</tbody>
+</table>
+<p>The complete specification fails because every mandatory criterion must be
+satisfied. RMSE compresses error over the entire run into one number; it
+does not separately reveal overshoot, final offset or actuator usage.</p>
+</details>
+<h3 id="discussion-prompt">Discussion prompt</h3>
+<p>Should the controller be rejected immediately, retuned, or accepted with a
+documented deviation? The numerical answer depends on whether the criteria are
+hard safety constraints, contractual acceptance requirements or tuning goals.</p>
+<h3 id="engineering-extension-compare-two-incomplete-summaries">Engineering extension — compare two incomplete summaries</h3>
+<p>Controller A has lower RMSE but <span class="arithmatex">\(14\%\)</span> overshoot. Controller B has higher RMSE
+but no overshoot and a small final error. Decide which controller you would
+choose for:</p>
+<ol>
+<li>an autonomous shuttle prioritizing passenger comfort;</li>
+<li>a test vehicle prioritizing rapid response;</li>
+<li>a safety-limited actuator that must never exceed the target.</li>
+</ol>
+<p>There is no universal answer without weighting the requirements. Connect the
+numerical metrics to the intended engineering application.</p>
+<h2 id="exercise-4-pi-accumulation-and-windup">Exercise 4 — PI accumulation and windup</h2>
+<h3 id="given_3">Given</h3>
+<div class="arithmatex">\[
+K_P=0.30,
+\quad
+K_I=0.10,
+\quad
+\Delta t=0.5\ \mathrm{s},
+\quad
+F_{\max}=4500\ \mathrm{N}.
+\]</div>
+<p>For three samples, the error remains:</p>
+<div class="arithmatex">\[
+e=4\ \mathrm{m/s}.
+\]</div>
+<p>Assume <span class="arithmatex">\(I_0=0\)</span> and no anti-windup:</p>
+<div class="arithmatex">\[
+I_k=I_{k-1}+e_k\Delta t,
+\]</div>
+<div class="arithmatex">\[
+u_{\mathrm{raw},k}=K_Pe_k+K_II_k,
+\qquad
+u_k=\operatorname{clip}(u_{\mathrm{raw},k},-1,1).
+\]</div>
+<p>After sample 3, the error becomes
+<span class="arithmatex">\(-1\ \mathrm{m/s}\)</span> for one sample.</p>
+<p>The units of the PI terms are worth checking. Error has unit
+<span class="arithmatex">\(\mathrm{m/s}\)</span>, while the accumulated integral state has unit:</p>
+<div class="arithmatex">\[
+[I]=[\text{speed error}][\text{time}]
+=\frac{\mathrm{m}}{\mathrm{s}}\mathrm{s}
+=\mathrm{m}.
+\]</div>
+<p>To produce a dimensionless command:</p>
+<div class="arithmatex">\[
+[K_P]=\mathrm{s/m},
+\qquad
+[K_I]=\mathrm{m^{-1}}.
+\]</div>
+<p>Accordingly, interpret the numerical gains here as
+<span class="arithmatex">\(K_P=0.30\ \mathrm{s/m}\)</span> and <span class="arithmatex">\(K_I=0.10\ \mathrm{m^{-1}}\)</span>.</p>
+<h3 id="tasks_3">Tasks</h3>
+<ol>
+<li>Complete samples 1–3 in the table.</li>
+<li>Calculate the integral state after the error changes to <span class="arithmatex">\(-1\)</span>.</li>
+<li>Calculate the new raw and applied commands.</li>
+<li>Explain why the sign of the command is surprising.</li>
+<li>Convert the sample-4 command into requested drive force using
+   <span class="arithmatex">\(F_\mathrm{drive}=uF_{\max}\)</span>.</li>
+<li>State what conditional anti-windup would do during samples 1–3.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Sample</th>
+<th style="text-align: right;">Error <span class="arithmatex">\(e\)</span></th>
+<th style="text-align: right;">Integral <span class="arithmatex">\(I\)</span></th>
+<th style="text-align: right;">Raw command</th>
+<th style="text-align: right;">Applied command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-1.0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<details class="success">
+<summary>Worked solution</summary>
+<p>During the positive-error samples:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Sample</th>
+<th style="text-align: right;">Error <span class="arithmatex">\(e\)</span></th>
+<th style="text-align: right;">Integral <span class="arithmatex">\(I\)</span></th>
+<th style="text-align: right;">Raw command</th>
+<th style="text-align: right;">Applied command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.40</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">1.60</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>When the error becomes <span class="arithmatex">\(-1\ \mathrm{m/s}\)</span>:</p>
+<div class="arithmatex">\[
+I_4=6+(-1)(0.5)=5.5,
+\]</div>
+<div class="arithmatex">\[
+u_{\mathrm{raw},4}
+=0.30(-1)+0.10(5.5)
+=0.25.
+\]</div>
+<p>The applied command is <span class="arithmatex">\(u_4=0.25\)</span>. The vehicle is already too fast, but
+the stored positive integral still requests acceleration. Conditional
+anti-windup would pause integration while positive error pushes the already
+saturated command farther above <span class="arithmatex">\(1\)</span>.</p>
+<p>The corresponding requested drive force is:</p>
+<div class="arithmatex">\[
+F_\mathrm{drive}
+=u_4F_{\max}
+=0.25(4500)
+=1125\ \mathrm{N}.
+\]</div>
+<p>This does not necessarily mean the net force is <span class="arithmatex">\(1125\ \mathrm{N}\)</span>.
+Rolling resistance, aerodynamic drag and any hill force must still be
+subtracted. It also does not mean the physical actuator force changes
+instantaneously if actuator lag is included.</p>
+</details>
+<h3 id="engineering-challenge_2">Engineering challenge</h3>
+<p>With <span class="arithmatex">\(I=5.5\)</span>, calculate how negative the error must become before the raw
+command reaches zero.</p>
+<details class="success">
+<summary>Challenge answer</summary>
+<p>Set:</p>
+<div class="arithmatex">\[
+0=K_Pe+K_II.
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+e=-\frac{K_II}{K_P}
+=-\frac{0.10(5.5)}{0.30}
+=-1.83\ \mathrm{m/s}.
+\]</div>
+<p>The vehicle must be approximately <span class="arithmatex">\(1.83\ \mathrm{m/s}\)</span> too fast before
+the raw command stops requesting positive drive.</p>
+</details>
+<h2 id="retrieval-check">Retrieval check</h2>
+<p>Answer individually, then compare with a neighbour:</p>
+<ol>
+<li>At equilibrium, why is net force zero rather than actuator force zero?</li>
+<li>What is the difference between raw command and applied command?</li>
+<li>Can a controller pass four requirements and fail the overall specification?</li>
+<li>Why does PI control need an anti-windup mechanism?</li>
+</ol>
+<details class="success">
+<summary>Answer check</summary>
+<ol>
+<li>The non-zero actuator force balances resistance and disturbance forces.</li>
+<li>Raw command is the controller request; applied command is the clipped
+   request that respects actuator limits.</li>
+<li>Yes. If all listed criteria are mandatory, one failure rejects the
+   complete configuration.</li>
+<li>The integrator can otherwise accumulate error while the actuator cannot
+   deliver the requested force, producing delayed recovery and overshoot.</li>
+</ol>
+</details>
+<h2 id="reserve-activity-sensitivity-to-parameter-error">Reserve activity — Sensitivity to parameter error</h2>
+<p>The estimated equilibrium speed uses:</p>
+<div class="arithmatex">\[
+v_\mathrm{eq}
+=\sqrt{
+\frac{uF_{\max}-F_\mathrm{rolling}-F_\mathrm{hill}}
+{c_\mathrm{drag}}
+}.
+\]</div>
+<p>Change one parameter by <span class="arithmatex">\(+20\%\)</span>, recalculate the equilibrium speed, and rank
+which uncertainty matters most under the selected operating condition.
+Distinguish parameters that influence equilibrium from those, such as mass,
+that influence only the transient in this simplified model.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
