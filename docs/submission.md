@@ -41,3 +41,68 @@ For Team B, the archive must contain:
    rel="noopener noreferrer">
   Upload project
 </a>
+
+## Random Team Order Generator
+
+Enter the team letters or names separated by commas or new lines, then generate a random presentation order.
+
+<div id="team-order-generator">
+  <label for="team-list"><strong>Teams</strong></label>
+
+  <textarea
+    id="team-list"
+    rows="4"
+    placeholder="Team A, Team B, Team C, Team D"
+    style="display:block; width:100%; max-width:600px; margin:0.5rem 0 1rem; padding:0.6rem;"
+  ></textarea>
+
+  <button
+    id="generate-team-order"
+    type="button"
+    class="md-button md-button--primary">
+    Generate random order
+  </button>
+
+  <p id="team-order-message" aria-live="polite"></p>
+  <ol id="team-order-result"></ol>
+</div>
+
+<script>
+(function () {
+  const teamInput = document.getElementById("team-list");
+  const generateButton = document.getElementById("generate-team-order");
+  const message = document.getElementById("team-order-message");
+  const result = document.getElementById("team-order-result");
+
+  generateButton.addEventListener("click", function () {
+    const teams = [
+      ...new Set(
+        teamInput.value
+          .split(/[\n,;]+/)
+          .map(team => team.trim())
+          .filter(team => team.length > 0)
+      )
+    ];
+
+    result.replaceChildren();
+
+    if (teams.length < 2) {
+      message.textContent = "Please enter at least two teams.";
+      return;
+    }
+
+    for (let i = teams.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [teams[i], teams[randomIndex]] = [teams[randomIndex], teams[i]];
+    }
+
+    teams.forEach(function (team) {
+      const listItem = document.createElement("li");
+      listItem.textContent = team;
+      result.appendChild(listItem);
+    });
+
+    message.textContent = "Random order generated:";
+  });
+})();
+</script>
