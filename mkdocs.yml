@@ -93,4 +93,8 @@ nav:
       - Python reference: resources/python-reference.md
       - Formula sheet: resources/formula-sheet.md
       - Troubleshooting: resources/troubleshooting.md
-
+  - Resources:
+      - Python reference: resources/python-reference.md
+      - Formula sheet: resources/formula-sheet.md
+      - Troubleshooting: resources/troubleshooting.md
+  - Project submission: submission.md
